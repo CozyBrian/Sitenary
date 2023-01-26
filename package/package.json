@@ -1,0 +1,8 @@
+{
+  "name": "sitenary",
+  "version": "1.0.0",
+  "description": "Introducing Sitenary, the most comprehensive website analytics tool on the market.",
+  "main": "index.js",
+  "author": "Brian Newton",
+  "license": "MIT"
+}
