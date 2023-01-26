@@ -4,8 +4,6 @@ import path from "path";
 
 const app = express();
 
-app.use(express.static(path.join(__dirname, "..", "public")));
-
 app.use(
   cors({
     origin: "*",
@@ -13,12 +11,13 @@ app.use(
   })
 );
 
-app.get("/", (req: Request, res: Response) => {
-  res.sendFile(path.join(__dirname, "public", "..", "index.html"));
+// app.use("/v1", v1_api)
+
+app.use(express.static(path.join(__dirname, "..", "public")));
+
+app.get("*", (req: Request, res: Response) => {
+  res.sendFile(path.join(__dirname, "..", "public", "index.html"));
 });
 
-app.use(express.static("public"));
-
-// app.use("/v1", v1_api)
   
 export default app;
