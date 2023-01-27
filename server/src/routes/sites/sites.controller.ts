@@ -1,7 +1,14 @@
 import { Request, Response } from "express";
-import { createNewSite, isSiteExists } from "../../models/site/site.model";
+import { createNewSite, deleteSiteByID, getAllSites, isSiteExists } from "../../models/site/site.model";
 
-export const getSites = (req: Request, res: Response) => {};
+export const getSites = (req: Request, res: Response) => {
+  getAllSites().then((sites) => {
+    res.status(200).send(sites);
+  })
+  .catch((err) => {
+    res.status(500).send(err);
+  })
+};
 
 export const postSite = async (req: Request, res: Response) => {
   const { name, url } = req.body;
@@ -20,4 +27,15 @@ export const postSite = async (req: Request, res: Response) => {
 
 };
 
-export const deleteSite = (req: Request, res: Response) => {};
+export const deleteSite = async (req: Request, res: Response) => {
+  const { id } = req.params;
+  if (await isSiteExists(id)) {
+    deleteSiteByID(id).then((site) => {
+      res.status(200).json({ message: "Site deleted", site });
+    }).catch((err) => {
+      res.status(500).send(err);
+    });
+  } else {
+    res.status(404).json({ message: "Site not found" });
+  }
+};

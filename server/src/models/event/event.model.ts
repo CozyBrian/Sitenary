@@ -10,3 +10,9 @@ export const sendEvent = async (event: EVENT, site: SITE_TYPE) => {
 
   return item;
 };
+
+export const getSiteEvents = async (site: SITE_TYPE) => {
+  const item = await Site.findOne({ url: site.url }) || await Site.findById(site._id);
+
+  return item?.events;
+};

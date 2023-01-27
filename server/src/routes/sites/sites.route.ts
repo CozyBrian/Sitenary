@@ -5,6 +5,6 @@ const sitesRouter = express.Router();
 
 sitesRouter.get("/", getSites);
 sitesRouter.post("/", postSite);
-sitesRouter.delete("/", deleteSite);
+sitesRouter.delete("/:id", deleteSite);
 
 export default sitesRouter;

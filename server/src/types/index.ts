@@ -1,13 +1,16 @@
 export type EVENT = {
+  _id?: string;
   type: "VIEW" | "URI_PATH";
   createdAt: Date;
-  ip?: string | undefined;
-  uriPath?: string | undefined;
-  userAgent?: string | undefined;
-  platform?: string | undefined;
+  ip?: string;
+  uriPath?: string;
+  userAgent?: string;
+  platform?: string;
 }
 
 export type SITE_TYPE = {
+  _id?: string;
+  events?: EVENT[];
   name: string;
   url: string;
 }
