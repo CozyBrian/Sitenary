@@ -4,6 +4,7 @@ import path from "path";
 import morgan from "morgan";
 
 import v1_api from "./routes/v1-router";
+import nodeCache from "./utils/nodeCache";
 
 const app = express();
 
@@ -18,7 +19,7 @@ app.use(
   })
 );
 
-app.use("/v1", v1_api)
+app.use("/v1", nodeCache(300), v1_api)
 
 app.use(express.static(path.join(__dirname, "..", "public")));
 
