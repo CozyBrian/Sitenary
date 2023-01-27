@@ -1,17 +1,25 @@
 import { Request, Response } from "express";
 import { getSiteEvents, sendEvent } from "../../models/event/event.model";
 import { isSiteExists } from "../../models/site/site.model";
-import { EVENT, SITE_TYPE } from "../../types";
+import { EVENT, PeriodType, SITE_TYPE } from "../../types";
 
 export const getEvents = async (req: Request, res: Response) => {
   const siteId = req.params.id;
+  const periodQ = req.query.period as PeriodType;
+
+  let period = periodQ === "short" ||
+  periodQ === "medium" || 
+  periodQ === "long" ||
+  periodQ === "longest" ||
+  periodQ === "2xlonger" ? periodQ : "short";
 
   if (await isSiteExists(siteId)) {
-    const siteEvents = await getSiteEvents({ _id: siteId, url: "null", name: "null" })
-    res.status(200).send(siteEvents);
+    const siteEvents = await getSiteEvents({ _id: siteId, url: "null", name: "null" }, period);
+    res.status(200).send({ period: period, items: siteEvents});
   } else {
     res.status(400).send({ error: "Site not found" });
   }
+
 };
 
 export const postEvent = async (req: Request, res: Response) => {
@@ -26,3 +34,7 @@ export const postEvent = async (req: Request, res: Response) => {
   }
 
 };
+
+export const getEventsLast7Days = async (req: Request, res: Response) => {
+
+}

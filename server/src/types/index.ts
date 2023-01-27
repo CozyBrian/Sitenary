@@ -14,3 +14,5 @@ export type SITE_TYPE = {
   name: string;
   url: string;
 }
+
+export type PeriodType = "short" | "medium" | "long" | "2xlonger" | "longest" | undefined;

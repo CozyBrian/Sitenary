@@ -1,10 +1,13 @@
 import express, { Request, Response } from "express";
 import cors from "cors";
 import path from "path";
+import morgan from "morgan";
 
 import v1_api from "./routes/v1-router";
 
 const app = express();
+
+app.use(morgan("tiny"));
 
 app.use(express.json());
 
