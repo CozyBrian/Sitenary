@@ -2,7 +2,11 @@ import express, { Request, Response } from "express";
 import cors from "cors";
 import path from "path";
 
+import v1_api from "./routes/v1-router";
+
 const app = express();
+
+app.use(express.json());
 
 app.use(
   cors({
@@ -11,7 +15,7 @@ app.use(
   })
 );
 
-// app.use("/v1", v1_api)
+app.use("/v1", v1_api)
 
 app.use(express.static(path.join(__dirname, "..", "public")));
 
