@@ -2,10 +2,10 @@ import { setDay, subDays, subMonths, subWeeks, subYears } from "date-fns";
 import { EVENT, PeriodType, SITE_TYPE } from "../../types";
 import Site from "../site/site.mongo";
 
-export const sendEvent = async (event: EVENT, site: SITE_TYPE) => {
-  const item = await Site.findOne({ url: site.url });
+export const sendEvent = async (event: EVENT, siteId: string) => {
+  const item = await Site.findById(siteId);
  
-  item?.events.create(event);
+  // item?.events.create(event);
   item?.events.push(event);
   item?.save();
 

@@ -1,7 +1,8 @@
 import { Request, Response } from "express";
+import requestIp from 'request-ip';
 import { getSiteEvents, sendEvent } from "../../models/event/event.model";
 import { isSiteExists } from "../../models/site/site.model";
-import { EVENT, PeriodType, SITE_TYPE } from "../../types";
+import { EVENT, PeriodType } from "../../types";
 import { saveCache } from "../../utils/nodeCache";
 
 export const getEvents = async (req: Request, res: Response) => {
@@ -25,11 +26,11 @@ export const getEvents = async (req: Request, res: Response) => {
 };
 
 export const postEvent = async (req: Request, res: Response) => {
+  const { id } = req.params;
   const event = req.body.event as EVENT;
-  const site = req.body.site as SITE_TYPE;
 
-  if (await isSiteExists(site.url)) {
-    const sentEvent = await sendEvent(event, site)
+  if (await isSiteExists(id)) {
+    const sentEvent = await sendEvent(event, id)
     res.status(200).send(sentEvent);
   } else {
     res.status(400).send({ error: "Site not found" });
@@ -37,6 +38,7 @@ export const postEvent = async (req: Request, res: Response) => {
 
 };
 
-export const getEventsLast7Days = async (req: Request, res: Response) => {
-
+export const getIp = async (req: Request, res: Response) => {
+  let clientIp = requestIp.getClientIp(req)
+  res.status(200).send({ ip: clientIp });
 }
