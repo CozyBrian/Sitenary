@@ -16,6 +16,7 @@ const Sidebar = () => {
       return dispatch(action.app.setSelectedSite(item._id));
     },
     staleTime: 1000 * 60 * 60,
+    refetchOnWindowFocus: false,
   });
 
   return (

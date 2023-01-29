@@ -1,19 +1,22 @@
-import React from "react";
+import React, { useState } from "react";
 import { Oval } from "react-loader-spinner";
 import { useQuery } from "react-query";
 import { useAppSelector } from "../../../hooks";
-import { ISite } from "../../../types";
+import { IEventsResponse, ISite, IViewsDataSet } from "../../../types";
+import { reduceData } from "../../../utils/reduce";
 import { getSiteEvents, getSites } from "../../../utils/Sitenary";
+import BarChart from "../../Charts/bar-chart";
 import "./style.scss";
 
 const MainView = () => {
   const app = useAppSelector((state) => state.app);
+  const [viewDataSet, setViewDataSet] = useState<IViewsDataSet[]>([]);
   const { data: siteData } = useQuery("sites", getSites);
   const selectedSite: ISite = siteData?.find(
     (site: ISite) => site._id === app.selectedSite
   );
 
-  const { isLoading, isError, error, data } = useQuery(
+  const { isLoading, isError, data } = useQuery(
     ["sites", app.selectedSite],
     () =>
       getSiteEvents(
@@ -22,6 +25,10 @@ const MainView = () => {
       ),
     {
       enabled: app.selectedSite !== null,
+      onSuccess: (data: IEventsResponse) => {
+        const dataSet = reduceData(data);
+        setViewDataSet(dataSet);
+      },
     }
   );
 
@@ -47,6 +54,24 @@ const MainView = () => {
                   />
                 </div>
               )}
+              {isError && (
+                <div className="loading-container">
+                  <p>There was an error the data</p>
+                </div>
+              )}
+              {data !== undefined && (
+                <BarChart
+                  chartData={{
+                    labels: viewDataSet.map((data) => data.date.split("-")[2]),
+                    datasets: [
+                      {
+                        label: "Views",
+                        data: viewDataSet.map((data) => data.count),
+                      },
+                    ],
+                  }}
+                />
+              )}
             </div>
           </div>
           <div className="main-content-right">
@@ -61,6 +86,19 @@ const MainView = () => {
                     strokeWidth={4}
                   />
                 </div>
+              )}
+              {data !== undefined && (
+                <BarChart
+                  chartData={{
+                    labels: viewDataSet.map((data) => data.date.split("-")[2]),
+                    datasets: [
+                      {
+                        label: "Unique Visitors",
+                        data: viewDataSet.map((data) => data.uniqueIPs),
+                      },
+                    ],
+                  }}
+                />
               )}
             </div>
           </div>
