@@ -67,6 +67,7 @@ const MainView = () => {
                       {
                         label: "Views",
                         data: viewDataSet.map((data) => data.count),
+                        backgroundColor: "#0284C7",
                       },
                     ],
                   }}
@@ -95,6 +96,7 @@ const MainView = () => {
                       {
                         label: "Unique Visitors",
                         data: viewDataSet.map((data) => data.uniqueIPs),
+                        backgroundColor: "#FACC15",
                       },
                     ],
                   }}
