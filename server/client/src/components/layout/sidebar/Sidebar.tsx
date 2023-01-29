@@ -11,10 +11,11 @@ import "./style.scss";
 const Sidebar = () => {
   const dispatch = useAppDispatch();
   const { isLoading, isError, error, data } = useQuery("sites", getSites, {
-    onSuccess: ({ data }) => {
+    onSuccess: (data) => {
       const item: ISite = data[0];
       return dispatch(action.app.setSelectedSite(item._id));
     },
+    staleTime: 1000 * 60 * 60,
   });
 
   return (
@@ -34,9 +35,8 @@ const Sidebar = () => {
             />
           </div>
         )}
-        {data?.data?.map((site: ISite) => (
-          <SidebarItem key={site._id} site={site} />
-        ))}
+        {data !== undefined &&
+          data.map((site: ISite) => <SidebarItem key={site._id} site={site} />)}
       </div>
     </nav>
   );
