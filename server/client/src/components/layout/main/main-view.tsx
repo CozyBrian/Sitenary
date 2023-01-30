@@ -96,7 +96,16 @@ const MainView = () => {
                       {
                         label: "Unique Visitors",
                         data: viewDataSet.map((data) => data.uniqueIPs),
-                        backgroundColor: "#FACC15",
+                        backgroundColor: (ctx) => {
+                          const index = ctx.dataIndex;
+                          const dataset = ctx.dataset.data as number[];
+                          const filteredArr = dataset.filter((x) => x > 0);
+                          const indexx = dataset.indexOf(
+                            Math.min.apply(Math, filteredArr)
+                          );
+
+                          return index === indexx ? "#EF4444" : "#0369A1";
+                        },
                       },
                     ],
                   }}
