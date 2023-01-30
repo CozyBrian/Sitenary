@@ -4,7 +4,6 @@ export type EVENT = {
   createdAt: Date;
   ip?: string;
   uriPath?: string;
-  userAgent?: string;
   platform?: string;
 }
 

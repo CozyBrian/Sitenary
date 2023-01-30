@@ -4,6 +4,7 @@ import { getSiteEvents, sendEvent } from "../../models/event/event.model";
 import { isSiteExists } from "../../models/site/site.model";
 import { EVENT, PeriodType } from "../../types";
 import { saveCache } from "../../utils/nodeCache";
+import UAParser from "ua-parser-js";
 
 export const getEvents = async (req: Request, res: Response) => {
   const siteId = req.params.id;
@@ -30,8 +31,12 @@ export const postEvent = async (req: Request, res: Response) => {
   const event = req.body.event as EVENT;
 
   if (await isSiteExists(id)) {
-    const sentEvent = await sendEvent(event, id)
-    res.status(200).send(sentEvent);
+    let clientIp = requestIp.getClientIp(req);
+    const UserAgent = req.headers["user-agent"];
+    const ua = UAParser(UserAgent);
+    console.log(ua);
+    await sendEvent({ip: clientIp!, platform: ua.os.name , ...event}, id)
+    res.status(200).send("Success");
   } else {
     res.status(400).send({ error: "Site not found" });
   }
