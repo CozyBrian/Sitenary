@@ -4,9 +4,12 @@
   "description": "Introducing Sitenary, the most comprehensive website analytics tool on the market.",
   "main": "src/index.js",
   "scripts": {
+    "prebuild": "yarn install && cd client && yarn install",
     "start": "node dist/index.js",
+    "client": "cd client && yarn dev",
+    "build:client": "cd client && yarn build",
     "dev": "nodemon src/index.ts",
-    "build": "tsc --project ."
+    "build": "yarn build:client && tsc --project ."
   },
   "author": "Brian Newton",
   "license": "MIT",
