@@ -1,7 +1,7 @@
 import React from "react";
 import { Oval } from "react-loader-spinner";
 import { useQuery } from "react-query";
-import { useAppDispatch } from "../../../hooks";
+import { useAppDispatch, useAppSelector } from "../../../hooks";
 import { ISite } from "../../../types";
 import { getSites } from "../../../utils/Sitenary";
 import SidebarItem from "./sidebar-item";
@@ -9,11 +9,14 @@ import { action } from "../../../redux";
 import "./style.scss";
 
 const Sidebar = () => {
+  const app = useAppSelector((state) => state.app);
   const dispatch = useAppDispatch();
   const { isLoading, isError, error, data } = useQuery("sites", getSites, {
     onSuccess: (data) => {
       const item: ISite = data[0];
-      return dispatch(action.app.setSelectedSite(item._id));
+      if (app.selectedSite === null) {
+        return dispatch(action.app.setSelectedSite(item._id));
+      }
     },
     staleTime: 1000 * 60 * 60,
     refetchOnWindowFocus: false,
