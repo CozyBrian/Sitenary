@@ -1,5 +1,6 @@
 import React from "react";
 import { Oval } from "react-loader-spinner";
+import Close from "../../../assets/icons/close.svg";
 import { useQuery } from "react-query";
 import { useAppDispatch, useAppSelector } from "../../../hooks";
 import { ISite } from "../../../types";
@@ -24,7 +25,15 @@ const Sidebar = () => {
 
   return (
     <nav className="main-sidebar">
-      <h1>Sitenary</h1>
+      <div className="main-sidebar-header">
+        <h1>Sitenary</h1>
+        <div
+          className="main-sidebar-icon"
+          onClick={() => dispatch(action.app.setAddSiteModalOpen(true))}
+        >
+          <img src={Close} alt="close-icon" />
+        </div>
+      </div>
       <div className="main-sidebar-list">
         {isError && (
           <div className="loading-container">{JSON.stringify(error)}</div>

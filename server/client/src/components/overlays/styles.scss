@@ -1,0 +1,122 @@
+.overlay-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 10;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .dialogue-box {
+    width: 100%;
+    max-width: 500px;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
+
+    .dialogue-box__header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+
+      .dialogue-box__title {
+        font-size: 1.5rem;
+        font-weight: 600;
+      }
+
+      .dialogue-box__close {
+        width: 18px;
+        height: 18px;
+        padding: 4px;
+        border-radius: 25%;
+        cursor: pointer;
+
+        &:hover {
+          background-color: rgba(0, 0, 0, 0.1);
+        }
+
+        &:active {
+          background-color: rgba(0, 0, 0, 0.2);
+        }
+
+        img {
+          width: 100%;
+          height: 100%;
+        }
+      }
+    }
+
+    .dialogue-box__content {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 20px;
+
+
+      .dialogue-box__input {
+        display: flex;
+        flex-direction: column;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 1rem;
+
+        label {
+          font-size: 1rem;
+          margin-bottom: 5px;
+        }
+
+        input {
+          padding: 8px;
+          border: 1px solid #ccc;
+          border-radius: 5px;
+          font-size: 1rem;
+        }
+      }
+
+    }
+
+    .dialogue-box__footer {
+      display: flex;
+      justify-content: flex-end;
+
+      .dialogue-box__button {
+        $cancel-color: #D61600;
+        $save-color: #45C00D;
+
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 1rem;
+        margin-left: 10px;
+
+        &.cancel {
+          background-color: #fff;
+          border: 1px solid $cancel-color;
+          color: $cancel-color;
+          
+          &:hover {
+            background-color: $cancel-color;
+            color: #fff;
+          }
+        }
+
+        &.save {
+          background-color: $save-color;
+          border: 1px solid $save-color;
+          color: #fff;
+
+          &:hover {
+            background-color: rgba($save-color, 0.8);
+          }
+        }
+
+      }
+    }
+  }
+}
