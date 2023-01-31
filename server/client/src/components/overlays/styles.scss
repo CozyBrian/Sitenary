@@ -76,6 +76,11 @@
           border: 1px solid #ccc;
           border-radius: 5px;
           font-size: 1rem;
+          outline: none;
+
+          &.error {
+            border: 2px solid #D61600;
+          }
         }
       }
 

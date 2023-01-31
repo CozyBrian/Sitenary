@@ -3,7 +3,9 @@ import { useMutation } from "react-query";
 import Close from "../../assets/icons/close.svg";
 import { useAppDispatch } from "../../hooks";
 import { action } from "../../redux";
+import { urlRegex } from "../../utils/constants";
 import { postSite } from "../../utils/Sitenary";
+import cn from "classnames";
 import "./styles.scss";
 
 const initialState = { name: "", url: "" };
@@ -26,7 +28,9 @@ function reducer(state: typeof initialState, action: ACTIONTYPE) {
 const AddSiteOverlays = () => {
   const appdispatch = useAppDispatch();
   const [state, dispatch] = useReducer(reducer, initialState);
-  const { mutate } = useMutation("sites", postSite, {});
+  const { mutate, error } = useMutation("sites", postSite, {});
+
+  const isUrlValid = urlRegex.test(state.url);
 
   return (
     <>
@@ -62,6 +66,7 @@ const AddSiteOverlays = () => {
                 }
                 type="text"
                 id="site-url"
+                className={cn({ error: state.url !== "" && !isUrlValid })}
               />
             </div>
           </div>
