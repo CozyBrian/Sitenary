@@ -16,13 +16,17 @@ export const postSite = async (req: Request, res: Response) => {
   if (await isSiteExists(url)) {
     res.status(400).json({ message: "Site already exists" });
   } else {
-    createNewSite({ name, url })
-    .then((site) => {
-      res.status(201).json(site);
-    })
-    .catch((err) => {
-      res.status(500).json(err);
-    });
+    if ((name === "" || name === undefined) || (url === "" || url === undefined)) {
+      res.status(400).json({ message: "Missing Field is required" });
+    } else {
+      createNewSite({ name, url })
+      .then((site) => {
+        res.status(201).json(site);
+      })
+      .catch((err) => {
+        res.status(500).json(err);
+      });
+    }
   }
 
 };
