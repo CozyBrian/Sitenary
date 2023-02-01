@@ -16,7 +16,7 @@ export const getEvents = async (req: Request, res: Response) => {
   periodQ === "longest" ||
   periodQ === "2xlonger" ? periodQ : "short";
 
-  if (await isSiteExists(siteId)) {
+  if (await isSiteExists(siteId) && siteId !== "undefinded") {
     const siteEvents = await getSiteEvents({ _id: siteId, url: "null", name: "null" }, period);
     saveCache(30, req.originalUrl, { period: period, items: siteEvents});
     res.status(200).send({ period: period, items: siteEvents});

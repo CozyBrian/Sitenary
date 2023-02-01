@@ -7,7 +7,7 @@ export const eventSchema = new mongoose.Schema({
     required: true,
   },
   ip: String,
-  uriPath: String,
+  origin: String,
   userAgent: String,
   createdAt: {
     type: Date,
