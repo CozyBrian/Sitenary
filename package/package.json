@@ -1,6 +1,6 @@
 {
   "name": "sitenary",
-  "version": "0.0.5",
+  "version": "0.1.0",
   "description": "Sitenary simple comprehensive website analytics tool for your website",
   "main": "./lib/cjs/index.js",
   "types": "./lib/cjs/types/index.d.ts",
