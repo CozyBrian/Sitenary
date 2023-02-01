@@ -34,7 +34,6 @@ export const postEvent = async (req: Request, res: Response) => {
     let clientIp = requestIp.getClientIp(req);
     const UserAgent = req.headers["user-agent"];
     const ua = UAParser(UserAgent);
-    console.log(ua);
     await sendEvent({ip: clientIp!, platform: ua.os.name , ...event}, id)
     res.status(200).send("Success");
   } else {
