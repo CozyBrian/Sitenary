@@ -3,7 +3,7 @@ export type EVENT = {
   type: "VIEW" | "URI_PATH";
   createdAt: Date;
   ip?: string;
-  uriPath?: string;
+  origin?: string;
   platform?: string;
 }
 

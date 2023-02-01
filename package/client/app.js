@@ -7,8 +7,31 @@ class Sitenary {
     (async () => {
       this.siteId = site;
 
+      addEventListener("hashchange", (e) => {
+        const path = e.newURL.split("#")[1];
+        fetch(`http://localhost:3001/v1/events/${this.siteId}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          event: {
+            type: "URI_PATH",
+            origin: `/${path}`, 
+          }
+        })
+      })
+      .then((response) => {
+        console.log("Sitenary: Event sent!");
+      })
+      .catch((error) => {
+        console.log("Sitenary: Error sending event!");
+        console.log(error);
+      })
+      })
+
       console.log(`Sitenary: sending event`);
-      return fetch(`https://sitenary-web-huuh3.ondigitalocean.app/v1/events/${this.siteId}`, {
+      return fetch(`http://localhost:3001/v1/events/${this.siteId}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
@@ -16,6 +39,7 @@ class Sitenary {
         body: JSON.stringify({
           event: {
             type: "VIEW",
+            origin: window.location.pathname, 
           }
         })
       })
@@ -30,4 +54,4 @@ class Sitenary {
   }
 }
 
-const testSite = new Sitenary("63d3cd486408f8035d03ea5c");
+const testSite = new Sitenary("63da5d6584dbe18d835870c7");

@@ -6,9 +6,14 @@ export const eventSchema = new mongoose.Schema({
     enum: ["VIEW", "URI_PATH"],
     required: true,
   },
-  ip: String,
-  origin: String,
-  userAgent: String,
+  ip: {
+    type: String,
+    required: true,
+  },
+  origin: {
+    type: String,
+    required: true,
+  },
   createdAt: {
     type: Date,
     default: Date.now(),
