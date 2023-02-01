@@ -27,6 +27,7 @@ const MainView = () => {
       enabled: app.selectedSite !== null,
       onSuccess: (data: IEventsResponse) => {
         const dataSet = reduceData(data);
+        console.log(dataSet);
         setViewDataSet(dataSet);
       },
     }

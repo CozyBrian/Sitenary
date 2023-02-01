@@ -8,8 +8,9 @@ export interface IEvent {
   _id: string;
   type: string;
   ip: string;
-  platform: string;
+  origin: string;
   createdAt: string;
+  platform: string;
 }
 
 export type PeriodType =
@@ -29,4 +30,6 @@ export interface IViewsDataSet {
   date: string;
   count: number;
   uniqueIPs: number;
+  platforms: { [key: string]: number };
+  origins: { [key: string]: number };
 }
