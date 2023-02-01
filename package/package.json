@@ -1,7 +1,7 @@
 {
   "name": "sitenary",
   "version": "0.1.0",
-  "description": "Sitenary simple comprehensive website analytics tool for your website",
+  "description": "Sitenary is simple comprehensive analytics tool for your website",
   "main": "./lib/cjs/index.js",
   "types": "./lib/cjs/types/index.d.ts",
   "author": "Brian Newton",
