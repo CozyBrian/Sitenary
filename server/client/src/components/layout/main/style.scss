@@ -4,6 +4,7 @@
   flex-direction: column;
   background-color: #fff;
   padding: 28px;
+  overflow-y: scroll;
 
   h1 {
     font-size: 38px;
@@ -13,29 +14,42 @@
   }
 
   .main-content-container {
-    flex: 1;
+    min-width: 963px;
+    max-width: 963px;
+    margin: 0 auto;
+
     
     .complication-box {
-      height: 100%;
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      grid-template-rows: repeat(2, 1fr);
-      grid-column-gap: 16px;
-      grid-row-gap: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      
 
-      .main-content-left { 
-        display: flex;
-        grid-area: 1 / 1 / 2 / 2; 
-      }
+      .complication-parent {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: 1fr;
+        grid-column-gap: 16px;
+        grid-row-gap: 0px;
 
-      .main-content-right { 
-        display: flex;
-        grid-area: 1 / 2 / 2 / 3;
+        .main-content-left { 
+          display: flex;
+          grid-area: 1 / 1 / 2 / 2; 
+        }
+  
+        .main-content-right { 
+          display: flex;
+          grid-area: 1 / 2 / 2 / 3;
+        }
+
       }
 
       .main-content-bottom { 
-        display: flex;
-        grid-area: 2 / 1 / 3 / 3; 
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: 1fr;
+        grid-column-gap: 16px;
+        grid-row-gap: 0px;
       }
 
       .complication-container {
@@ -51,6 +65,20 @@
           font-weight: 600;
           margin: 0;
           margin-bottom: 24px;
+        }
+
+        .complication-header {
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          justify-content: space-between;
+          font-size: 0.8rem;
+          background-color: #e5e5e5;
+          padding: 12px;
+
+          p {
+            margin: 0;
+          }
         }
       }
 

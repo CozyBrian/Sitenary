@@ -69,3 +69,21 @@ export function reduceData(data: IEventsResponse): IViewsDataSet[] {
     origins,
   }));
 }
+
+export const countProperty = (
+  data: IEventsResponse,
+  property: "platform" | "origin"
+) => {
+  const platforms = new Set(data.items.map((item) => item[property]));
+  const counts: { [key: string]: number } = {};
+
+  platforms.forEach((platform) => {
+    counts[platform] = data.items.filter(
+      (item) => item[property] === platform
+    ).length;
+  });
+
+  return counts;
+};
+
+export type ICount = ReturnType<typeof countProperty>;
