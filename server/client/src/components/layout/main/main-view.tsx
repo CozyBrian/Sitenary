@@ -135,23 +135,25 @@ const MainView = () => {
                   <p>There was an error the data</p>
                 </div>
               )}
-              {data !== undefined && (
-                <DoughnutChart
-                  chartData={{
-                    labels: Object.entries(originsDataSet).map(
-                      (data) => data[0]
-                    ),
-                    datasets: [
-                      {
-                        label: "Pages",
-                        data: Object.entries(originsDataSet).map(
-                          (data) => data[1]
-                        ),
-                      },
-                    ],
-                  }}
-                />
-              )}
+              <div className=" pie-chart">
+                {data !== undefined && (
+                  <DoughnutChart
+                    chartData={{
+                      labels: Object.entries(originsDataSet).map(
+                        (data) => data[0]
+                      ),
+                      datasets: [
+                        {
+                          label: "Pages",
+                          data: Object.entries(originsDataSet).map(
+                            (data) => data[1]
+                          ),
+                        },
+                      ],
+                    }}
+                  />
+                )}
+              </div>
             </div>
             <div className="complication-container">
               <h2>OSs</h2>
@@ -170,23 +172,25 @@ const MainView = () => {
                   <p>There was an error the data</p>
                 </div>
               )}
-              {data !== undefined && (
-                <DoughnutChart
-                  chartData={{
-                    labels: Object.entries(platformsDataSet).map(
-                      (data) => data[0]
-                    ),
-                    datasets: [
-                      {
-                        label: "Pages",
-                        data: Object.entries(platformsDataSet).map(
-                          (data) => data[1]
-                        ),
-                      },
-                    ],
-                  }}
-                />
-              )}
+              <div className=" pie-chart">
+                {data !== undefined && (
+                  <DoughnutChart
+                    chartData={{
+                      labels: Object.entries(platformsDataSet).map(
+                        (data) => data[0]
+                      ),
+                      datasets: [
+                        {
+                          label: "Pages",
+                          data: Object.entries(platformsDataSet).map(
+                            (data) => data[1]
+                          ),
+                        },
+                      ],
+                    }}
+                  />
+                )}
+              </div>
             </div>
           </div>
         </div>
