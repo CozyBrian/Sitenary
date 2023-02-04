@@ -42,7 +42,7 @@ export function reduceData(data: IEventsResponse): IViewsDataSet[] {
   const highestDate = new Date(Date.now());
 
   // Add entries for 6 days before the highest date
-  for (let i = 1; i <= 6; i++) {
+  for (let i = 1; i <= 7; i++) {
     const currentDate = new Date(highestDate);
     currentDate.setDate(highestDate.getDate() - i);
     const dateString = currentDate.toISOString().slice(0, 10);
