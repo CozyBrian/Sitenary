@@ -36,7 +36,7 @@ const Sidebar = () => {
       </div>
       <div className="main-sidebar-list">
         {isError && (
-          <div className="loading-container">{JSON.stringify(error)}</div>
+          <div className="loading-container">Error loading sites...</div>
         )}
         {isLoading && (
           <div className="loading-container">
