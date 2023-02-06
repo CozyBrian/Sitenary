@@ -2,9 +2,10 @@ import { Request, Response } from "express";
 import requestIp from 'request-ip';
 import { getSiteEvents, sendEvent } from "../../models/event/event.model";
 import { isSiteExists } from "../../models/site/site.model";
-import { EVENT, PeriodType } from "../../types";
+import { EVENT, IEventsResponse, PeriodType } from "../../types";
 import { saveCache } from "../../utils/nodeCache";
 import UAParser from "ua-parser-js";
+import { countProperty, reduceData } from "../../utils/reduce";
 
 export const getEvents = async (req: Request, res: Response) => {
   const siteId = req.params.id;
@@ -18,8 +19,19 @@ export const getEvents = async (req: Request, res: Response) => {
 
   if (await isSiteExists(siteId) && siteId !== "undefinded") {
     const siteEvents = await getSiteEvents({ _id: siteId, url: "null", name: "null" }, period);
-    saveCache(30, req.originalUrl, { period: period, items: siteEvents});
-    res.status(200).send({ period: period, items: siteEvents});
+    const responseItem = { period: period, items: siteEvents };
+    const responseItemString = JSON.stringify(responseItem);
+    const responseItemParsed: IEventsResponse = JSON.parse(responseItemString);
+
+    const computedData = { 
+      period: period, 
+      dataSet: reduceData(responseItemParsed), 
+      origins: countProperty(responseItemParsed, "origin"), 
+      platforms: countProperty(responseItemParsed, "platform")
+    };
+
+    saveCache(30, req.originalUrl, computedData);
+    res.status(200).send(computedData);
   } else {
     res.status(400).send({ error: "Site not found" });
   }

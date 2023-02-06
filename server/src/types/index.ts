@@ -14,4 +14,25 @@ export type SITE_TYPE = {
   url: string;
 }
 
+export interface IEvent {
+  _id: string;
+  type: string;
+  ip: string;
+  origin: string;
+  createdAt: string;
+  platform: string;
+}
+
+export interface IEventsResponse {
+  period: string;
+  items: IEvent[];
+}
+
+export interface IViewsDataSet {
+  date: string;
+  count: number;
+  uniqueIPs: number;
+}
+
+
 export type PeriodType = "short" | "medium" | "long" | "2xlonger" | "longest" | undefined;

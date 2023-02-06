@@ -4,8 +4,7 @@ import { Oval } from "react-loader-spinner";
 import { useQuery } from "react-query";
 import { useAppSelector } from "../../../hooks";
 import useElementScroll from "../../../hooks/useElementScroll";
-import { IEventsResponse, ISite, IViewsDataSet } from "../../../types";
-import { countProperty, ICount, reduceData } from "../../../utils/reduce";
+import { ICount, IEventsResponse, ISite, IViewsDataSet } from "../../../types";
 import { getSiteEvents, getSites } from "../../../utils/Sitenary";
 import BarChart from "../../Charts/bar-chart";
 import DoughnutChart from "../../Charts/doughnut-chart";
@@ -24,8 +23,6 @@ const MainView = () => {
   const MainContainerRef = useRef<HTMLDivElement>(null);
   const elementScroll = useElementScroll(MainContainerRef);
 
-  console.log(elementScroll);
-
   const { isLoading, isError, data } = useQuery(
     ["sites", app.selectedSite],
     () =>
@@ -36,12 +33,9 @@ const MainView = () => {
     {
       enabled: app.selectedSite !== null,
       onSuccess: (data: IEventsResponse) => {
-        const dataSet = reduceData(data);
-        const O_Dataset = countProperty(data, "origin");
-        const P_Dataset = countProperty(data, "platform");
-        setOriginsDataSet(O_Dataset);
-        setPlatformsDataSet(P_Dataset);
-        setViewDataSet(dataSet);
+        setOriginsDataSet(data.origins);
+        setPlatformsDataSet(data.platforms);
+        setViewDataSet(data.dataSet);
       },
     }
   );

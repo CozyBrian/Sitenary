@@ -5,8 +5,6 @@ export function reduceData(data: IEventsResponse): IViewsDataSet[] {
     [key: string]: {
       count: number;
       ips: string[];
-      platforms: { [key: string]: number };
-      origins: { [key: string]: number };
     };
   } = {};
   data.items.forEach((item) => {
@@ -16,22 +14,10 @@ export function reduceData(data: IEventsResponse): IViewsDataSet[] {
         dates[date].ips.push(item.ip);
       }
       dates[date].count++;
-      if (dates[date].platforms[item.platform]) {
-        dates[date].platforms[item.platform]++;
-      } else {
-        dates[date].platforms[item.platform] = 1;
-      }
-      if (dates[date].origins[item.origin]) {
-        dates[date].origins[item.origin]++;
-      } else {
-        dates[date].origins[item.origin] = 1;
-      }
     } else {
       dates[date] = {
         count: 1,
         ips: [item.ip],
-        platforms: { [item.platform]: 1 },
-        origins: { [item.origin]: 1 },
       };
     }
   });
@@ -47,10 +33,7 @@ export function reduceData(data: IEventsResponse): IViewsDataSet[] {
     currentDate.setDate(highestDate.getDate() - i);
     const dateString = currentDate.toISOString().slice(0, 10);
     if (!dates[dateString]) {
-      entries.push([
-        dateString,
-        { count: 0, ips: [], platforms: {}, origins: {} },
-      ]);
+      entries.push([dateString, { count: 0, ips: [] }]);
     }
   }
 
@@ -61,12 +44,10 @@ export function reduceData(data: IEventsResponse): IViewsDataSet[] {
       Date.parse(new Date(b[0]).toDateString())
   );
 
-  return entries.map(([date, { count, ips, platforms, origins }]) => ({
+  return entries.map(([date, { count, ips }]) => ({
     date,
     count,
     uniqueIPs: ips.length,
-    platforms,
-    origins,
   }));
 }
 
@@ -78,7 +59,7 @@ export const countProperty = (
   const counts: { [key: string]: number } = {};
 
   platforms.forEach((platform) => {
-    counts[platform] = data.items.filter(
+    counts[platform!] = data.items.filter(
       (item) => item[property] === platform
     ).length;
   });

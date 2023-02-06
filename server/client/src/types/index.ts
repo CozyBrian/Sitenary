@@ -22,14 +22,22 @@ export type PeriodType =
   | undefined;
 
 export interface IEventsResponse {
-  period: string;
-  items: IEvent[];
+  period: "short" | "medium" | "long" | "2xlonger" | "longest";
+  dataSet: IViewsDataSet[];
+  origins: {
+    [key: string]: number;
+  };
+  platforms: {
+    [key: string]: number;
+  };
 }
+
+export type ICount = {
+  [key: string]: number;
+};
 
 export interface IViewsDataSet {
   date: string;
   count: number;
   uniqueIPs: number;
-  platforms: { [key: string]: number };
-  origins: { [key: string]: number };
 }
