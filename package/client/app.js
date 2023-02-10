@@ -9,7 +9,7 @@ class Sitenary {
 
       addEventListener("hashchange", (e) => {
         const path = e.newURL.split("#")[1];
-        fetch(`http://localhost:3001/v1/events/${this.siteId}`, {
+        fetch(`http://172.20.10.2/v1/events/${this.siteId}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
@@ -31,7 +31,7 @@ class Sitenary {
       })
 
       console.log(`Sitenary: sending event`);
-      return fetch(`http://localhost:3001/v1/events/${this.siteId}`, {
+      return fetch(`http://172.20.10.2:3001/v1/events/${this.siteId}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json"

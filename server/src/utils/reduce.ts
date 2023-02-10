@@ -1,3 +1,4 @@
+import { subDays, subMonths } from "date-fns";
 import { IEventsResponse, IViewsDataSet } from "../types";
 
 export function reduceData(data: IEventsResponse): IViewsDataSet[] {
@@ -8,14 +9,29 @@ export function reduceData(data: IEventsResponse): IViewsDataSet[] {
     };
   } = {};
   data.items.forEach((item) => {
-    const date = item.createdAt.slice(0, 10);
-    if (dates[date]) {
-      if (!dates[date].ips.includes(item.ip)) {
-        dates[date].ips.push(item.ip);
+    const date = () => {
+      switch (data.period) {
+        case "short":
+          return item.createdAt.slice(0, 10);
+          
+        case "medium":
+          return item.createdAt.slice(0, 10);
+          
+        case "long":
+          return item.createdAt.slice(5, 7);
+
+        default:
+          return item.createdAt.slice(0, 10);
       }
-      dates[date].count++;
+    };
+    
+    if (dates[date()]) {
+      if (!dates[date()].ips.includes(item.ip)) {
+        dates[date()].ips.push(item.ip);
+      }
+      dates[date()].count++;
     } else {
-      dates[date] = {
+      dates[date()] = {
         count: 1,
         ips: [item.ip],
       };
@@ -25,15 +41,75 @@ export function reduceData(data: IEventsResponse): IViewsDataSet[] {
   const entries = Object.entries(dates);
 
   // Get the highest date
-  const highestDate = new Date(Date.now());
+  const highestDate = () => {
+    switch (data.period) {
+      case "short":
+        return new Date(Date.now());
+
+      case "medium":
+        const today = new Date();
+        return new Date(today.getFullYear(), today.getMonth() + 1, 0);
+        
+      default:
+        return new Date(Date.now());
+    }
+  };
+
+  const daysbefore = () => {
+    switch (data.period) {
+      case "short":
+        return 6;
+        
+      case "medium":
+        const today = new Date();
+        return new Date(today.getFullYear(), today.getMonth() + 1, 0).getDate() - 1;
+
+      case "long":
+        return 5;
+        
+      default:
+        return 6;
+    }
+  }
 
   // Add entries for 6 days before the highest date
-  for (let i = 0; i <= 6; i++) {
-    const currentDate = new Date(highestDate);
-    currentDate.setDate(highestDate.getDate() - i);
-    const dateString = currentDate.toISOString().slice(0, 10);
-    if (!dates[dateString]) {
-      entries.push([dateString, { count: 0, ips: [] }]);
+  for (let i = 0; i <= daysbefore(); i++) {
+    let currentDate = new Date(highestDate());
+    
+    const currentDateModified = () => {
+      switch (data.period) {
+        case "short":
+          return subDays(currentDate, i);
+          
+        case "medium":
+          return subDays(currentDate, i);
+          
+        case "long":
+          return subMonths(currentDate, i)
+          
+        default:
+          return subDays(currentDate, i);
+      }
+    };
+
+
+    const dateString = () => {
+      switch (data.period) {
+        case "short":
+          return currentDateModified().toISOString().slice(0, 10);
+        
+        case "medium":
+          return currentDateModified().toISOString().slice(0, 10);
+
+        case "long":
+          return currentDateModified().toISOString().slice(5, 7);
+        
+        default:
+          return currentDateModified().toISOString().slice(0, 10);
+      }
+    };
+    if (!dates[dateString()]) {
+      entries.push([dateString(), { count: 0, ips: [] }]);
     }
   }
 

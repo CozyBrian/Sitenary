@@ -6,12 +6,14 @@ import { useAppSelector } from "../../../hooks";
 import useElementScroll from "../../../hooks/useElementScroll";
 import { ICount, IEventsResponse, ISite, IViewsDataSet } from "../../../types";
 import { getSiteEvents, getSites } from "../../../utils/Sitenary";
+import { months } from "../../../utils/utils";
 import BarChart from "../../Charts/bar-chart";
 import DoughnutChart from "../../Charts/doughnut-chart";
 import "./style.scss";
 
 const MainView = () => {
   const app = useAppSelector((state) => state.app);
+  const [activePeriod, setActivePeriod] = useState("long");
   const [viewDataSet, setViewDataSet] = useState<IViewsDataSet[]>([]);
   const [originsDataSet, setOriginsDataSet] = useState<ICount>({});
   const [platformsDataSet, setPlatformsDataSet] = useState<ICount>({});
@@ -20,22 +22,35 @@ const MainView = () => {
     (site: ISite) => site._id === app.selectedSite
   );
 
+  const activePeriodSelections = ["short", "medium", "long"];
+
   const MainContainerRef = useRef<HTMLDivElement>(null);
   const elementScroll = useElementScroll(MainContainerRef);
 
   const { isLoading, isError, data } = useQuery(
-    ["sites", app.selectedSite],
+    ["sites", activePeriod, app.selectedSite],
     () =>
       getSiteEvents(
         app.selectedSite !== null ? app.selectedSite : siteData[0]._id,
-        "short"
+        activePeriod
       ),
     {
       enabled: app.selectedSite !== null,
       onSuccess: (data: IEventsResponse) => {
         setOriginsDataSet(data.origins);
         setPlatformsDataSet(data.platforms);
-        setViewDataSet(data.dataSet);
+        if (activePeriod === "long") {
+          const today = new Date();
+          const vdsOld = data.dataSet.filter((data) => {
+            return parseInt(data.date) > today.getMonth() + 1;
+          });
+          const vdsNew = data.dataSet.filter((data) => {
+            return parseInt(data.date) <= today.getMonth() + 1;
+          });
+          setViewDataSet([...vdsOld, ...vdsNew]);
+        } else {
+          setViewDataSet(data.dataSet);
+        }
       },
     }
   );
@@ -53,6 +68,23 @@ const MainView = () => {
       </header>
       <main className="main-content">
         <div className="main-content-container">
+          <div className="main-switch-container">
+            <div className="main-switch">
+              {activePeriodSelections.map((period) => {
+                return (
+                  <div
+                    key={period}
+                    onClick={() => setActivePeriod(period)}
+                    className={cn("main-switch-item", {
+                      active: activePeriod === period,
+                    })}
+                  >
+                    {period}
+                  </div>
+                );
+              })}
+            </div>
+          </div>
           <div className="complication-box">
             <div className="complication-parent">
               <div className="main-content-left">
@@ -76,9 +108,17 @@ const MainView = () => {
                   {data !== undefined && (
                     <BarChart
                       chartData={{
-                        labels: viewDataSet.map(
-                          (data) => data.date.split("-")[2]
-                        ),
+                        labels: viewDataSet.map((data) => {
+                          switch (activePeriod) {
+                            case "long":
+                              const date = data.date ? data.date : "2";
+                              const month = months[parseInt(date) - 1];
+                              return month ? month.slice(0, 3) : "Jan";
+
+                            default:
+                              return data.date.split("-")[2];
+                          }
+                        }),
                         datasets: [
                           {
                             label: "Views",
@@ -107,9 +147,17 @@ const MainView = () => {
                   {data !== undefined && (
                     <BarChart
                       chartData={{
-                        labels: viewDataSet.map(
-                          (data) => data.date.split("-")[2]
-                        ),
+                        labels: viewDataSet.map((data) => {
+                          switch (activePeriod) {
+                            case "long":
+                              const date = data.date ? data.date : "2";
+                              const month = months[parseInt(date) - 1];
+                              return month ? month.slice(0, 3) : "Jan";
+
+                            default:
+                              return data.date.split("-")[2];
+                          }
+                        }),
                         datasets: [
                           {
                             label: "Unique Visitors",
