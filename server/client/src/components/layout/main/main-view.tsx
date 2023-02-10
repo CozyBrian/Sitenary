@@ -13,7 +13,7 @@ import "./style.scss";
 
 const MainView = () => {
   const app = useAppSelector((state) => state.app);
-  const [activePeriod, setActivePeriod] = useState("long");
+  const [activePeriod, setActivePeriod] = useState("short");
   const [viewDataSet, setViewDataSet] = useState<IViewsDataSet[]>([]);
   const [originsDataSet, setOriginsDataSet] = useState<ICount>({});
   const [platformsDataSet, setPlatformsDataSet] = useState<ICount>({});
