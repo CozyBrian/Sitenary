@@ -195,9 +195,10 @@ const MainView = () => {
                   {data !== undefined && (
                     <DoughnutChart
                       chartData={{
-                        labels: Object.entries(originsDataSet).map(
-                          (data) => data[0]
-                        ),
+                        labels: Object.entries(originsDataSet).map((data) => {
+                          const route = data[0].split("/");
+                          return "/" + route[route.length - 1];
+                        }),
                         datasets: [
                           {
                             label: "Pages",
