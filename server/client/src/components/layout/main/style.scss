@@ -6,10 +6,10 @@
   .main-content-header {
     display: flex;
     align-items: center;
-    position: sticky;
+    position: fixed;
     width: 100%;
     top: 0;
-    left: 0;
+    left: 299px;
     font-size: 24px;
     font-weight: 600;
     padding: 14px;
@@ -75,6 +75,7 @@
   flex-direction: column;
   background-color: #fff;
   padding: 28px;
+  margin-top: 76px;
 
 
   .main-content-container {
@@ -153,6 +154,85 @@
 
     }
     
+    .settings-container {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      background-color: #fff;
+      border: 1px solid #e5e5e5;
+      margin-top: 16px;
+      padding: 24px;
+      
+      h2 {
+        font-size: 24px;
+        font-weight: 600;
+        margin: 0;
+        margin-bottom: 24px;
+      }
+
+      
+      .settings-info {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 8px;
+        margin: 8px 0;
+
+        h3 {
+          margin: 0;
+        }
+
+        .info-container {
+          padding: 8px;
+          gap: 16px;
+          border: 2px solid #e5e5e5;
+          border-radius: 8px;
+  
+          p {
+            margin: 0;
+          }
+        }
+      }
+      
+    }
+
+    .danger-zone-container {
+      margin-top: 16px;
+
+      .danger-zone {
+        background-color: #ffb7b7;
+        padding: 24px;
+        border: 2px solid #b20000;
+        border-radius: 4px;
+
+        h3 {
+          margin: 0;
+          font-size: 24px;
+          font-weight: 600;
+          color: #b20000;
+        }
+
+        p {
+          margin: 0;
+          margin-top: 8px;
+        }
+
+        button {
+          margin-top: 16px;
+          background-color: #fc2626;
+          color: #fff;
+          border: none;
+          padding: 8px 16px;
+          border-radius: 4px;
+          cursor: pointer;
+          transition: all 0.3s ease;
+
+          &:hover {
+            background-color: #b20000;
+          }
+        }
+      }
+    }
   }
 
 }

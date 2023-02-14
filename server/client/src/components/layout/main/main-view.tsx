@@ -1,11 +1,11 @@
 import cn from "classnames";
 import React, { useRef, useState } from "react";
 import { Oval } from "react-loader-spinner";
-import { useQuery } from "react-query";
+import { useMutation, useQuery } from "react-query";
 import { useAppSelector } from "../../../hooks";
 import useElementScroll from "../../../hooks/useElementScroll";
 import { ICount, IEventsResponse, ISite, IViewsDataSet } from "../../../types";
-import { getSiteEvents, getSites } from "../../../utils/Sitenary";
+import { deleteSite, getSiteEvents, getSites } from "../../../utils/Sitenary";
 import { months } from "../../../utils/utils";
 import BarChart from "../../Charts/bar-chart";
 import DoughnutChart from "../../Charts/doughnut-chart";
@@ -54,6 +54,8 @@ const MainView = () => {
       },
     }
   );
+
+  const { mutate } = useMutation("sites", deleteSite, {});
 
   return (
     <section ref={MainContainerRef} className="main">
@@ -244,6 +246,49 @@ const MainView = () => {
                       }}
                     />
                   )}
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="settings-container">
+            <h2>Settings</h2>
+            <div className="settings-info-container">
+              {selectedSite && (
+                <>
+                  <div className="settings-info">
+                    <h3>Site: </h3>
+                    <div className="info-container">
+                      <p>{selectedSite.name}</p>
+                    </div>
+                  </div>
+                  <div className="settings-info">
+                    <h3>Url: </h3>
+                    <div className="info-container">
+                      <p>{selectedSite.url}</p>
+                    </div>
+                  </div>
+                  <div className="settings-info">
+                    <h3>SiteId: </h3>
+                    <div className="info-container">
+                      <p>{selectedSite._id}</p>
+                    </div>
+                  </div>
+                </>
+              )}
+            </div>
+            <div className="danger-zone-container">
+              <div className="danger-zone">
+                <h3>Danger Zone</h3>
+                <div className="danger-zone-info">
+                  <p>If you delete this site, all the data will be lost</p>
+                  <button
+                    className="delete-button"
+                    onClick={() => {
+                      mutate(selectedSite._id);
+                    }}
+                  >
+                    Delete
+                  </button>
                 </div>
               </div>
             </div>

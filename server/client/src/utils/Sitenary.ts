@@ -14,3 +14,6 @@ export const getSiteEvents = (id: string, period: string) =>
 
 export const postSite = (site: { name: string; url: string }) =>
   axios.post(`${BACKEND_URL}/v1/sites`, site).then((res) => res.data);
+
+export const deleteSite = (id: string) =>
+  axios.delete(`${BACKEND_URL}/v1/sites/${id}`).then((res) => res.data);

@@ -7,6 +7,7 @@ import { urlRegex } from "../../utils/constants";
 import { postSite } from "../../utils/Sitenary";
 import cn from "classnames";
 import "./styles.scss";
+import { AxiosError } from "axios";
 
 const initialState = { name: "", url: "" };
 
@@ -29,6 +30,9 @@ const AddSiteOverlays = () => {
   const appdispatch = useAppDispatch();
   const [state, dispatch] = useReducer(reducer, initialState);
   const { mutate, error } = useMutation("sites", postSite, {});
+
+  const axiosError = error as AxiosError;
+  const errorMessage = axiosError?.response?.data as { message: string };
 
   const isUrlValid = urlRegex.test(state.url);
 
@@ -69,6 +73,7 @@ const AddSiteOverlays = () => {
                 className={cn({ error: state.url !== "" && !isUrlValid })}
               />
             </div>
+            {error !== null && <div>{errorMessage.message as string}</div>}
           </div>
           <div className="dialogue-box__footer">
             <button
