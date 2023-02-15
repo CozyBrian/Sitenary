@@ -9,6 +9,7 @@ import { deleteSite, getSiteEvents, getSites } from "../../../utils/Sitenary";
 import { months } from "../../../utils/utils";
 import BarChart from "../../Charts/bar-chart";
 import DoughnutChart from "../../Charts/doughnut-chart";
+import SettingsContainer from "./settings";
 import "./style.scss";
 
 const MainView = () => {
@@ -251,49 +252,12 @@ const MainView = () => {
               </div>
             </div>
           </div>
-          <div className="settings-container">
-            <h2>Settings</h2>
-            <div className="settings-info-container">
-              {selectedSite && (
-                <>
-                  <div className="settings-info">
-                    <h3>Site: </h3>
-                    <div className="info-container">
-                      <p>{selectedSite.name}</p>
-                    </div>
-                  </div>
-                  <div className="settings-info">
-                    <h3>Url: </h3>
-                    <div className="info-container">
-                      <p>{selectedSite.url}</p>
-                    </div>
-                  </div>
-                  <div className="settings-info">
-                    <h3>SiteId: </h3>
-                    <div className="info-container">
-                      <p>{selectedSite._id}</p>
-                    </div>
-                  </div>
-                </>
-              )}
-            </div>
-            <div className="danger-zone-container">
-              <div className="danger-zone">
-                <h3>Danger Zone</h3>
-                <div className="danger-zone-info">
-                  <p>If you delete this site, all the data will be lost</p>
-                  <button
-                    className="delete-button"
-                    onClick={() => {
-                      mutate(selectedSite._id);
-                    }}
-                  >
-                    Delete
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
+          <SettingsContainer
+            selectedSite={selectedSite}
+            mutate={() => {
+              mutate(selectedSite._id);
+            }}
+          />
         </div>
       </main>
     </section>
