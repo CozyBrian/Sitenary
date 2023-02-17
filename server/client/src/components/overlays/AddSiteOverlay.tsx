@@ -1,5 +1,5 @@
 import React, { useReducer } from "react";
-import { useMutation } from "react-query";
+import { useMutation, useQueryClient } from "react-query";
 import Close from "../../assets/icons/close.svg";
 import { useAppDispatch } from "../../hooks";
 import { action } from "../../redux";
@@ -29,7 +29,13 @@ function reducer(state: typeof initialState, action: ACTIONTYPE) {
 const AddSiteOverlays = () => {
   const appdispatch = useAppDispatch();
   const [state, dispatch] = useReducer(reducer, initialState);
-  const { mutate, error } = useMutation("sites", postSite, {});
+  const queryClient = useQueryClient();
+  const { mutate, error } = useMutation("sites", postSite, {
+    onSuccess: () => {
+      queryClient.invalidateQueries("sites");
+      appdispatch(action.app.setAddSiteModalOpen(false));
+    },
+  });
 
   const axiosError = error as AxiosError;
   const errorMessage = axiosError?.response?.data as { message: string };

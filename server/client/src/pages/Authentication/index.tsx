@@ -40,6 +40,7 @@ const Auth = () => {
       )
       .then((res) => {
         console.log(res.data);
+        localStorage.setItem("accessToken", res.data.accessToken);
         navigate("/");
       })
       .catch((err: AxiosError) => {

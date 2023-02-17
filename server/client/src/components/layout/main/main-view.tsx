@@ -1,9 +1,10 @@
 import cn from "classnames";
 import React, { useRef, useState } from "react";
 import { Oval } from "react-loader-spinner";
-import { useMutation, useQuery } from "react-query";
-import { useAppSelector } from "../../../hooks";
+import { useMutation, useQuery, useQueryClient } from "react-query";
+import { useAppDispatch, useAppSelector } from "../../../hooks";
 import useElementScroll from "../../../hooks/useElementScroll";
+import { action } from "../../../redux";
 import { ICount, IEventsResponse, ISite, IViewsDataSet } from "../../../types";
 import { deleteSite, getSiteEvents, getSites } from "../../../utils/Sitenary";
 import { months } from "../../../utils/utils";
@@ -14,6 +15,8 @@ import "./style.scss";
 
 const MainView = () => {
   const app = useAppSelector((state) => state.app);
+  const dispatch = useAppDispatch();
+  const queryClient = useQueryClient();
   const [activePeriod, setActivePeriod] = useState("short");
   const [viewDataSet, setViewDataSet] = useState<IViewsDataSet[]>([]);
   const [originsDataSet, setOriginsDataSet] = useState<ICount>({});
@@ -56,7 +59,13 @@ const MainView = () => {
     }
   );
 
-  const { mutate } = useMutation("sites", deleteSite, {});
+  const { mutate } = useMutation("sites", deleteSite, {
+    onSuccess: async () => {
+      queryClient.invalidateQueries("sites");
+      dispatch(action.app.setSelectedSite(siteData[0]._id));
+      window.location.reload();
+    },
+  });
 
   return (
     <section ref={MainContainerRef} className="main">
