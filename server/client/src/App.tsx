@@ -1,15 +1,14 @@
-import MainView from "./components/layout/main/main-view";
-import Sidebar from "./components/layout/sidebar/Sidebar";
-import Overlays from "./components/overlays";
+import { Route, Routes } from "react-router-dom";
+import AuthScreen from "./pages/Authentication";
+import Dashboard from "./pages/Dashboard";
 
 function App() {
   return (
     <div className="App">
-      <div className="main-page-container">
-        <Sidebar />
-        <MainView />
-        <Overlays />
-      </div>
+      <Routes>
+        <Route path="/" element={<Dashboard />} />
+        <Route path="/auth" element={<AuthScreen />} />
+      </Routes>
     </div>
   );
 }
