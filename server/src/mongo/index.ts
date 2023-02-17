@@ -1,6 +1,5 @@
 import mongoose from "mongoose";
 
-
 async function MongoInit() {
   mongoose.set("strictQuery", true);
   mongoose.connect(process.env.MONGO_URI!)

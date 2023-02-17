@@ -34,5 +34,15 @@ export interface IViewsDataSet {
   uniqueIPs: number;
 }
 
-
 export type PeriodType = "short" | "medium" | "long" | "2xlonger" | "longest" | undefined;
+
+export interface IUser {
+  _id?: string;
+  email: string;
+  password: string;
+  createdAt: Date;
+  username: string;
+  phone: string;
+}
+
+export type IOUser = Partial<IUser>;
