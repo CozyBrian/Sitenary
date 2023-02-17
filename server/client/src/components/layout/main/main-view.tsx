@@ -1,5 +1,5 @@
 import cn from "classnames";
-import React, { useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { Oval } from "react-loader-spinner";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { useAppDispatch, useAppSelector } from "../../../hooks";
@@ -10,6 +10,7 @@ import { deleteSite, getSiteEvents, getSites } from "../../../utils/Sitenary";
 import { months } from "../../../utils/utils";
 import BarChart from "../../Charts/bar-chart";
 import DoughnutChart from "../../Charts/doughnut-chart";
+import Header from "../header";
 import SettingsContainer from "./settings";
 import "./style.scss";
 
@@ -69,15 +70,7 @@ const MainView = () => {
 
   return (
     <section ref={MainContainerRef} className="main">
-      <header
-        className={cn("main-content-header", { scroll: elementScroll > 50 })}
-      >
-        {selectedSite !== undefined ? (
-          <h1>{selectedSite.name}</h1>
-        ) : (
-          <h1>loading...</h1>
-        )}
-      </header>
+      <Header elementScroll={elementScroll} selectedSite={selectedSite} />
       <main className="main-content">
         <div className="main-content-container">
           <div className="main-switch-container">

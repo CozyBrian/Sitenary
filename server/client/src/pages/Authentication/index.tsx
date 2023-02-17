@@ -1,8 +1,10 @@
 import axios, { AxiosError } from "axios";
 import cn from "classnames";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+import { useAppDispatch, useAppSelector } from "../../hooks";
+import { action } from "../../redux";
 import "./styles.scss";
 // import { BACKEND_URL } from "../../constants";
 
@@ -15,15 +17,21 @@ interface FormInput {
 }
 
 const Auth = () => {
+  const { isAuthenticated } = useAppSelector((state) => state.app);
+  const dispatch = useAppDispatch();
   const [authMode, setAuthMode] = useState<"LOGIN" | "REGISTER">("LOGIN");
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [_isRequestSent, setIsRequestSent] = useState(false);
+  const [isRequestSent, setIsRequestSent] = useState(false);
   const navigate = useNavigate();
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<FormInput>();
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate("/");
+    }
+  }, [isAuthenticated, navigate]);
 
   const BACKEND_URL = "http://localhost:3001";
 
@@ -41,6 +49,8 @@ const Auth = () => {
       .then((res) => {
         console.log(res.data);
         localStorage.setItem("accessToken", res.data.accessToken);
+        dispatch(action.app.setIsAuthenticated(true));
+        window.location.reload();
         navigate("/");
       })
       .catch((err: AxiosError) => {

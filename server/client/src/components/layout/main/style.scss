@@ -2,20 +2,44 @@
   width: 100%;
   overflow-y: scroll;
   position: relative;
+  $SidebarWidth: 299px;
+
   
   .main-content-header {
     display: flex;
+    flex-direction: row;
+    justify-content: space-between;
     align-items: center;
     position: fixed;
     width: 100%;
     top: 0;
-    left: 299px;
+    left: $SidebarWidth;
     font-size: 24px;
     font-weight: 600;
     padding: 14px;
     padding-left: 28px;
     transition: all 0.3s ease;
     height: 48px;
+
+    .header-actions-section {
+
+      .header-action {
+        position: relative;
+        right: calc($SidebarWidth + 48px);
+        width: 28px;
+        height: 28px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        background: #000;
+
+        &:hover {
+          color: #999;
+        }
+      }
+    }
     
     h1 {
       margin: 0;
