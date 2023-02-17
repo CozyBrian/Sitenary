@@ -2,20 +2,15 @@ import { Request, Response } from "express";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 
-import { IUser } from "../../types";
+import { IUser, IUserPayload } from "../../types";
 import { createNewUser, getUserByEmail, isUserExists } from "../../models/users/user.model";
-
-type ITokenData = {
-  id: string;
-  email: string;
-}
 
 const TOKEN_EXPIRED = 60 * 24 * 3; // 3 days
 
 const ATokenSecret = process.env.ACCESS_TOKEN_SECRET!;
 const RTokenSecret = process.env.REFRESH_TOKEN_SECRET!;
 
-function _generateToken(data: ITokenData) {
+function _generateToken(data: IUserPayload) {
   return jwt.sign(data, ATokenSecret,{ expiresIn: `${TOKEN_EXPIRED}h` });
 }
 
@@ -52,7 +47,7 @@ export const postAuthLogin = async (req: Request, res: Response) => {
         accessToken,
         refreshToken,
       }
-      
+
       if (await bcrypt.compare(user.password, userdb!.password)) {
         return res.status(200).send(token);
       } else {
@@ -139,9 +134,6 @@ export const postAuthRefresh = async (req: Request, res: Response) => {
         error: "Unauthorized"
       });
     }
-
-    console.log(user);
-    
   });
 
 }

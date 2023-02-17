@@ -18,7 +18,7 @@ export const getEvents = async (req: Request, res: Response) => {
   periodQ === "2xlonger" ? periodQ : "short";
 
   if (await isSiteExists(siteId) && siteId !== "undefinded") {
-    const siteEvents = await getSiteEvents({ _id: siteId, url: "null", name: "null" }, period);
+    const siteEvents = await getSiteEvents({ _id: siteId, url: "null", name: "null", owner: req.user!.id }, period);
     const responseItem = { period: period, items: siteEvents };
     const responseItemString = JSON.stringify(responseItem);
     const responseItemParsed: IEventsResponse = JSON.parse(responseItemString);

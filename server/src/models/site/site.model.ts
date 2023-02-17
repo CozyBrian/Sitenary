@@ -19,9 +19,11 @@ export const isSiteExists = async (url: string) => {
   }
 }
 
-export const getAllSites = async () => {
+export const getAllSites = async (userId: string) => {
   try {
-    const sites = await Site.find({}, { __v: 0, events: 0 });
+    const sites = await Site.find({
+      owner: userId
+    }, { __v: 0, events: 0 });
     return sites;
   } catch (error) {
     console.error(error);

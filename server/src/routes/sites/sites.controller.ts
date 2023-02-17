@@ -2,7 +2,8 @@ import { Request, Response } from "express";
 import { createNewSite, deleteSiteByID, getAllSites, isSiteExists } from "../../models/site/site.model";
 
 export const getSites = (req: Request, res: Response) => {
-  getAllSites().then((sites) => {
+  const { id } = req.user!;
+  getAllSites(id).then((sites) => {
     res.status(200).send(sites);
   })
   .catch((err) => {
@@ -24,7 +25,7 @@ export const postSite = async (req: Request, res: Response) => {
       if (regex.test(url) === false) {
         res.status(400).json({ message: "Invalid URL" });
       } else {
-        createNewSite({ name, url })
+        createNewSite({ name, url, owner: req.user!.id })
         .then((site) => {
           res.status(201).json(site);
         })

@@ -10,6 +10,7 @@ export type EVENT = {
 export type SITE_TYPE = {
   _id?: string;
   events?: EVENT[];
+  owner: string;
   name: string;
   url: string;
 }
@@ -43,6 +44,11 @@ export interface IUser {
   createdAt: Date;
   username: string;
   phone: string;
+}
+
+export interface IUserPayload {
+  id: string;
+  email: string;
 }
 
 export type IOUser = Partial<IUser>;
