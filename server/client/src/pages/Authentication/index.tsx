@@ -3,6 +3,7 @@ import cn from "classnames";
 import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+import "./styles.scss";
 // import { BACKEND_URL } from "../../constants";
 
 interface FormInput {
@@ -10,7 +11,7 @@ interface FormInput {
   email: string;
   password: string;
   password_confirmation: string;
-  phone_number: string;
+  phone: string;
 }
 
 const Auth = () => {
@@ -24,30 +25,22 @@ const Auth = () => {
     formState: { errors },
   } = useForm<FormInput>();
 
-  const BACKEND_URL = "http://localhost:3000";
+  const BACKEND_URL = "http://localhost:3001";
 
   const onSubmit: SubmitHandler<FormInput> = (data) => {
     setIsRequestSent(true);
-
     axios
       .post(
         `${BACKEND_URL}${
-          authMode === "REGISTER" ? "/api/v1/users" : "/api/v1/auth/tokens"
+          authMode === "REGISTER" ? "/v1/auth/signup" : "/v1/auth/login"
         }`,
         {
           ...data,
-          station_id: 1,
-          role_id: 1,
         }
       )
       .then((res) => {
         console.log(res.data);
-        if (authMode === "REGISTER") {
-          setAuthMode("LOGIN");
-          navigate("/login");
-        } else {
-          navigate("/");
-        }
+        navigate("/");
       })
       .catch((err: AxiosError) => {
         console.log(err.response?.data);
@@ -103,10 +96,7 @@ const Auth = () => {
               </div>
               <div className="input-container">
                 <label htmlFor="phone_number">Phone Number</label>
-                <input
-                  {...register("phone_number", { required: true })}
-                  type="text"
-                />
+                <input {...register("phone", { required: true })} type="text" />
               </div>
             </>
           )}
