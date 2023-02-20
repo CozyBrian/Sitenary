@@ -2,6 +2,7 @@ import axios, { AxiosError } from "axios";
 import cn from "classnames";
 import { useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
+import { Oval } from "react-loader-spinner";
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import { action } from "../../redux";
@@ -110,7 +111,19 @@ const Auth = () => {
             </>
           )}
           <button type="submit" className="submit-button">
-            {authMode === "LOGIN" ? "Login" : "Register"}
+            {isRequestSent ? (
+              <Oval
+                color="#737373"
+                secondaryColor="#D7D7D7"
+                width={18}
+                height={18}
+                strokeWidth={4}
+              />
+            ) : authMode === "LOGIN" ? (
+              "Login"
+            ) : (
+              "Register"
+            )}
           </button>
           <p
             onClick={() =>

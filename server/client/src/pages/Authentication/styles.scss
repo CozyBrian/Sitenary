@@ -43,6 +43,11 @@
     }
     
     .submit-button {
+      height: 40px;
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
       background-color: #1e293b;
       color: #fff;
       border: none;
