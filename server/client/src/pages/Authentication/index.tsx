@@ -5,8 +5,8 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import { action } from "../../redux";
+import { BACKEND_URL } from "../../utils/constants";
 import "./styles.scss";
-// import { BACKEND_URL } from "../../constants";
 
 interface FormInput {
   username: string;
@@ -32,8 +32,6 @@ const Auth = () => {
       navigate("/");
     }
   }, [isAuthenticated, navigate]);
-
-  const BACKEND_URL = "http://localhost:3001";
 
   const onSubmit: SubmitHandler<FormInput> = (data) => {
     setIsRequestSent(true);
