@@ -21,7 +21,14 @@ const Header = ({
         )}
       </div>
       <div className="header-actions-section">
-        <div className="header-action">+</div>
+        <div
+          onClick={() => {
+            console.log("clicked!");
+          }}
+          className="header-action"
+        >
+          +
+        </div>
       </div>
     </header>
   );
