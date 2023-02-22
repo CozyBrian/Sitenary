@@ -1,13 +1,10 @@
 import { subDays, subMonths } from "date-fns";
 import { IEventsResponse, IViewsDataSet } from "../types";
 
+
+interface datesValue {count: number;ips: string[];}
 export function reduceData(data: IEventsResponse): IViewsDataSet[] {
-  const dates: {
-    [key: string]: {
-      count: number;
-      ips: string[];
-    };
-  } = {};
+  const dates = new Map<string, datesValue>()
   data.items.forEach((item) => {
     const date = () => {
       switch (data.period) {
@@ -25,20 +22,29 @@ export function reduceData(data: IEventsResponse): IViewsDataSet[] {
       }
     };
     
-    if (dates[date()]) {
-      if (!dates[date()].ips.includes(item.ip)) {
-        dates[date()].ips.push(item.ip);
+    if (dates.has(date())) {
+      let dateitem = dates.get(date())!;
+      if (!dateitem.ips.includes(item.ip)) {
+        dateitem.ips.push(item.ip);
       }
-      dates[date()].count++;
+      dateitem.count++;
+      dates.set(date(), dateitem);
     } else {
-      dates[date()] = {
+      dates.set(date(),
+      {
         count: 1,
         ips: [item.ip],
-      };
+      }
+      );
     }
   });
 
-  const entries = Object.entries(dates);
+  console.log("dates: ", dates);
+
+  const inter_dates = Object.fromEntries(dates);
+  const entries = Object.entries(inter_dates);
+  console.log("Entries: ",entries);
+  
 
   // Get the highest date
   const highestDate = () => {
@@ -108,7 +114,7 @@ export function reduceData(data: IEventsResponse): IViewsDataSet[] {
           return currentDateModified().toISOString().slice(0, 10);
       }
     };
-    if (!dates[dateString()]) {
+    if (!dates.has(dateString())) {
       entries.push([dateString(), { count: 0, ips: [] }]);
     }
   }
