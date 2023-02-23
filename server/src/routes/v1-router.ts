@@ -8,7 +8,7 @@ import WhichUser from "../middlewares/jwt";
 const v1_api = express.Router();
 
 v1_api.use('/sites', WhichUser, sitesRouter);
-v1_api.use('/events', WhichUser, eventsRouter);
+v1_api.use('/events', eventsRouter);
 v1_api.use('/users', usersRouter);
 v1_api.use('/auth', authRouter)
 
