@@ -22,6 +22,8 @@
     height: 48px;
 
     .header-actions-section {
+      position: relative;
+
 
       .header-action {
         position: relative;
@@ -33,10 +35,43 @@
         justify-content: center;
         cursor: pointer;
         transition: all 0.3s ease;
-        background: #000;
+        padding: 4px;
+        border-radius: 100%;
 
         &:hover {
-          color: #999;
+          background-color: #c4c4c4;
+        }
+      }
+
+      .header-action-menu {
+        position: absolute;
+        top: 100%;
+        right: calc($SidebarWidth + 48px);
+        background-color: #fff;
+        border: 1px solid #e5e5e5;
+        border-radius: 4px;
+        padding: 8px;
+        display: flex;
+        flex-direction: column;
+        font-weight: 500;
+        font-size: 14px;
+        gap: 8px;
+        z-index: 1;
+        img {
+          width: 16px;
+          height: 16px;
+        }
+
+        .header-action-menu-item {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          cursor: pointer;
+          transition: all 0.3s ease;
+
+          &:hover {
+            color: #999;
+          }
         }
       }
     }
@@ -51,6 +86,11 @@
       font-size: 14px;
       background-color: #fff;
       box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+
+      .header-action {
+        width: 22px;
+        height: 22px;
+      }
     }
   }
 }

@@ -50,7 +50,6 @@ const Auth = () => {
         localStorage.setItem("accessToken", res.data.accessToken);
         dispatch(action.app.setIsAuthenticated(true));
         window.location.reload();
-        navigate("/");
       })
       .catch((err: AxiosError) => {
         console.log(err.response?.data);
