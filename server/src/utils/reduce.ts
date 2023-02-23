@@ -39,12 +39,8 @@ export function reduceData(data: IEventsResponse): IViewsDataSet[] {
     }
   });
 
-  console.log("dates: ", dates);
-
   const inter_dates = Object.fromEntries(dates);
   const entries = Object.entries(inter_dates);
-  console.log("Entries: ",entries);
-  
 
   // Get the highest date
   const highestDate = () => {

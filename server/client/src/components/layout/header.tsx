@@ -16,7 +16,6 @@ const Header = ({
   const dispatch = useAppDispatch();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const handleLogOut = () => {
-    console.log("clicked!");
     localStorage.removeItem("accessToken");
     dispatch(action.app.setIsAuthenticated(true));
     window.location.reload();
