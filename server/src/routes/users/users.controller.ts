@@ -1,13 +1,30 @@
 import { Request, Response } from "express";
 
-// import { createNewUser, deleteUserByID, getAllUsers, getUserByID, isUserExists } from "../../models/user/user.model";
+import { getAllUsers, getUserByID } from "../../models/users/user.model";
 
-export const getUsers = (req: Request, res: Response) => {
-
+export const getUsers = async (req: Request, res: Response) => {
+  try {
+    const users = await getAllUsers();
+    return res.status(200).send(users);
+  } catch (error) {
+    return res.status(500).send({ error: error });
+  }
 }
 
 export const getUser = async (req: Request, res: Response) => {
+  const { id } = req.params;
 
+  try {
+    const user = await getUserByID(id);
+    
+    if (user !== null) {
+      return res.status(200).send(user);
+    } else {
+      return res.status(404).send({ error: "User not found" });
+    }
+  } catch (error) {
+    return res.status(500).send({ error: error });
+  }
 }
 
 export const postUser = async (req: Request, res: Response) => {

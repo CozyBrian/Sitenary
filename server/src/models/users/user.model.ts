@@ -33,7 +33,7 @@ export const getUserByEmail = async (email: string) => {
 
 export const getUserByID = async (id: string) => {
   try {
-    const user = await User.findById(id);
+    const user = await User.findById(id, { __v: 0, password: 0 });
     return user;
   } catch (error) {
     console.log(error);
@@ -43,7 +43,7 @@ export const getUserByID = async (id: string) => {
 
 export const getAllUsers = async () => {
   try {
-    const users = await User.find({}, { __v: 0 });
+    const users = await User.find({}, { __v: 0, password: 0 });
     return users;
   } catch (error) {
     console.log(error);
