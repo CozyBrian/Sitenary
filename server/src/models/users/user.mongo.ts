@@ -5,6 +5,7 @@ export const userSchema = new mongoose.Schema({
     type: String,
     required: true,
     unique: true,
+    readonly: true
   },
   password: {
     type: String,
@@ -13,6 +14,7 @@ export const userSchema = new mongoose.Schema({
   createdAt: {
     type: Date,
     default: Date.now(),
+    readonly: true
   },
   username: {
     type: String,

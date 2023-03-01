@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 
-import { getAllUsers, getUserByID, deleteUserByID } from "../../models/users/user.model";
+import { getAllUsers, getUserByID, deleteUserByID, updateUserByID } from "../../models/users/user.model";
+import { IOUser } from "../../types";
 
 export const getUsers = async (req: Request, res: Response) => {
   try {
@@ -29,10 +30,10 @@ export const getUser = async (req: Request, res: Response) => {
 
 export const deleteUser = async (req: Request, res: Response) => {
   const { id } = req.params;
-
+  
   try {
     const user = await deleteUserByID(id);
-
+    
     if (user !== null) {
       return res.status(200).send(user);
     } else {
@@ -44,5 +45,13 @@ export const deleteUser = async (req: Request, res: Response) => {
 }
 
 export const updateUser = async (req: Request, res: Response) => {
+  const { id } = req.params;
+  const body = req.body as IOUser;
 
+  try {
+    const updatedUser = await updateUserByID(id, body);
+    return res.status(200).send(updatedUser);
+  } catch (error) {
+    return res.status(500).send({ error: error });
+  }
 }
