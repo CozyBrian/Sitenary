@@ -26,6 +26,7 @@ const Auth = () => {
   const {
     register,
     handleSubmit,
+    setError,
     formState: { errors },
   } = useForm<FormInput>();
   useEffect(() => {
@@ -52,7 +53,45 @@ const Auth = () => {
         window.location.reload();
       })
       .catch((err: AxiosError) => {
-        console.log(err.response?.data);
+        const { error } = err.response?.data as { error: string };
+        console.log(error);
+        if (error) {
+          switch (error) {
+            case "User not found":
+              setError("email", {
+                type: "manual",
+                message: "Invalid email or password",
+              });
+              setError("password", {
+                type: "manual",
+                message: "Invalid email or password",
+              });
+              break;
+            case "WRONG_PASSWORD":
+              setError("password", {
+                type: "manual",
+                message: "wrong password",
+              });
+              break;
+
+            default:
+              break;
+          }
+
+          if (authMode === "REGISTER") {
+            if (error === "Email already exists") {
+              setError("email", {
+                type: "manual",
+                message: "Email already exists",
+              });
+            } else if (error === "Username already exists") {
+              setError("username", {
+                type: "manual",
+                message: "Username already exists",
+              });
+            }
+          }
+        }
       })
       .finally(() => {
         setIsRequestSent(false);
@@ -67,7 +106,10 @@ const Auth = () => {
         </p>
         <form onSubmit={handleSubmit(onSubmit)} className="form-container">
           <div className="input-container">
-            <label htmlFor="email">Email</label>
+            <div className="error-box">
+              <label htmlFor="email">Email</label>
+              <p>{errors.email?.message}</p>
+            </div>
             <input
               type="email"
               {...register("email", {
@@ -75,16 +117,22 @@ const Auth = () => {
                 pattern:
                   /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/,
               })}
-              className={cn("border border-slate-800 p-2", {
-                "outline outline-red-500 border-red-400": errors.email,
+              className={cn({
+                error: errors.email,
               })}
             />
           </div>
           <div className="input-container">
-            <label htmlFor="password">Password</label>
+            <div className="div error-box">
+              <label htmlFor="password">Password</label>
+              <p>{errors.password?.message}</p>
+            </div>
             <input
               {...register("password", { required: true })}
               type="password"
+              className={cn({
+                error: errors.password,
+              })}
             />
           </div>
           {authMode === "REGISTER" && (

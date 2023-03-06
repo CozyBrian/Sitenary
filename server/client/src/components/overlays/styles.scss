@@ -16,7 +16,7 @@
     background-color: #fff;
     padding: 20px;
     border-radius: 5px;
-    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
+    box-shadow: 0 0 32px -16px rgba(0, 0, 0, 0.5);
 
     .dialogue-box__header {
       display: flex;
@@ -54,7 +54,6 @@
     .dialogue-box__content {
       display: flex;
       flex-direction: column;
-      gap: 10px;
       margin-bottom: 20px;
 
 
@@ -62,17 +61,17 @@
         display: flex;
         flex-direction: column;
         padding: 10px;
-        border: 1px solid #ccc;
         border-radius: 5px;
         font-size: 1rem;
 
         label {
           font-size: 1rem;
           margin-bottom: 5px;
+          color: #75747B;
         }
 
         input {
-          padding: 8px;
+          padding: 12px;
           border: 1px solid #ccc;
           border-radius: 5px;
           font-size: 1rem;

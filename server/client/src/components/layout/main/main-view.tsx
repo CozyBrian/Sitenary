@@ -10,7 +10,7 @@ import { deleteSite, getSiteEvents, getSites } from "../../../utils/Sitenary";
 import { months } from "../../../utils/utils";
 import BarChart from "../../Charts/bar-chart";
 import DoughnutChart from "../../Charts/doughnut-chart";
-import Header from "../header";
+import Header from "../header/header";
 import SettingsContainer from "./settings";
 import "./style.scss";
 

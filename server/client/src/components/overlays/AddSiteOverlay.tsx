@@ -57,7 +57,7 @@ const AddSiteOverlays = () => {
           </div>
           <div className="dialogue-box__content">
             <div className="dialogue-box__input">
-              <label htmlFor="site-name">Title</label>
+              <label htmlFor="site-name">Name</label>
               <input
                 value={state.name}
                 onChange={(e) =>
@@ -68,7 +68,7 @@ const AddSiteOverlays = () => {
               />
             </div>
             <div className="dialogue-box__input">
-              <label htmlFor="site-url">Url</label>
+              <label htmlFor="site-url">URL</label>
               <input
                 value={state.url}
                 onChange={(e) =>

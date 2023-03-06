@@ -1,16 +1,17 @@
 import React, { useState } from "react";
 import cn from "classnames";
-import threedots from "../../assets/icons/three_dots.svg";
-import logout from "../../assets/icons/logout.png";
-import { ISite } from "../../types";
-import { useAppDispatch } from "../../hooks";
-import { action } from "../../redux";
+import threedots from "../../../assets/icons/threedots.svg";
+import logout from "../../../assets/icons/logout.png";
+import { ISite } from "../../../types";
+import { useAppDispatch } from "../../../hooks";
+import { action } from "../../../redux";
+import "./style.scss";
 
 const Header = ({
   selectedSite,
   elementScroll,
 }: {
-  selectedSite: ISite;
+  selectedSite?: ISite;
   elementScroll: number;
 }) => {
   const dispatch = useAppDispatch();
@@ -28,7 +29,7 @@ const Header = ({
         {selectedSite !== undefined ? (
           <h1>{selectedSite.name}</h1>
         ) : (
-          <h1>loading...</h1>
+          <h1>Sitenary</h1>
         )}
       </div>
       <div className="header-actions-section">

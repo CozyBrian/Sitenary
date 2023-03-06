@@ -298,5 +298,15 @@
       }
     }
   }
+}
 
+.empty-view {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  font-size: 36px;
+  font-weight: 600;
+  color: #999;
 }

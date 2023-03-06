@@ -12,11 +12,15 @@ import "./style.scss";
 const Sidebar = () => {
   const app = useAppSelector((state) => state.app);
   const dispatch = useAppDispatch();
-  const { isLoading, isError, error, data } = useQuery("sites", getSites, {
+  const { isLoading, isError, data } = useQuery("sites", getSites, {
     onSuccess: (data) => {
-      const item: ISite = data[0];
-      if (app.selectedSite === null) {
-        return dispatch(action.app.setSelectedSite(item._id));
+      console.log(data);
+
+      if (data[0]) {
+        const item: ISite = data[0];
+        if (app.selectedSite === null) {
+          return dispatch(action.app.setSelectedSite(item._id));
+        }
       }
     },
     staleTime: 1000 * 60 * 60,
@@ -38,7 +42,7 @@ const Sidebar = () => {
         {isError && (
           <div className="loading-container">Error loading sites...</div>
         )}
-        {isLoading && (
+        {isLoading ? (
           <div className="loading-container">
             <Oval
               color="#737373"
@@ -47,9 +51,13 @@ const Sidebar = () => {
               strokeWidth={4}
             />
           </div>
+        ) : data !== undefined && data.length !== 0 ? (
+          data.map((site: ISite) => <SidebarItem key={site._id} site={site} />)
+        ) : (
+          <div className="empty">
+            <p>No Sites</p>
+          </div>
         )}
-        {data !== undefined &&
-          data.map((site: ISite) => <SidebarItem key={site._id} site={site} />)}
       </div>
     </nav>
   );
