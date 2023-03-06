@@ -14,8 +14,6 @@ const Sidebar = () => {
   const dispatch = useAppDispatch();
   const { isLoading, isError, data } = useQuery("sites", getSites, {
     onSuccess: (data) => {
-      console.log(data);
-
       if (data[0]) {
         const item: ISite = data[0];
         if (app.selectedSite === null) {

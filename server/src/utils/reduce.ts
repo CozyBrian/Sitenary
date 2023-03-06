@@ -77,7 +77,7 @@ export function reduceData(data: IEventsResponse): IViewsDataSet[] {
   // Add entries for 6 days before the highest date
   for (let i = 0; i <= daysbefore(); i++) {
     let currentDate = new Date(highestDate());
-    
+
     const currentDateModified = () => {
       switch (data.period) {
         case "short":
@@ -94,7 +94,6 @@ export function reduceData(data: IEventsResponse): IViewsDataSet[] {
       }
     };
 
-
     const dateString = () => {
       switch (data.period) {
         case "short":
@@ -110,6 +109,7 @@ export function reduceData(data: IEventsResponse): IViewsDataSet[] {
           return currentDateModified().toISOString().slice(0, 10);
       }
     };
+
     if (!dates.has(dateString())) {
       entries.push([dateString(), { count: 0, ips: [] }]);
     }
