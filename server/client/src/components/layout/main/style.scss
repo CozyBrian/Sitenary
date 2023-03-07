@@ -2,7 +2,6 @@
   width: 100%;
   overflow-y: scroll;
   position: relative;
-  $SidebarWidth: 299px;
 
   
   .main-content-header {
@@ -13,7 +12,7 @@
     position: fixed;
     width: 100%;
     top: 0;
-    left: $SidebarWidth;
+    left: var(--SidebarWidth);
     font-size: 24px;
     font-weight: 600;
     padding: 14px;
@@ -27,7 +26,7 @@
 
       .header-action {
         position: relative;
-        right: calc($SidebarWidth + 48px);
+        right: calc(var(--SidebarWidth) + 48px);
         width: 28px;
         height: 28px;
         display: flex;
@@ -46,7 +45,7 @@
       .header-action-menu {
         position: absolute;
         top: 100%;
-        right: calc($SidebarWidth + 48px);
+        right: calc(var(--SidebarWidth) + 48px);
         background-color: #fff;
         border: 1px solid #e5e5e5;
         border-radius: 4px;
