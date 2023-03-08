@@ -4,12 +4,14 @@ type initialStateType = {
   selectedSite: string | null;
   addSiteModalOpen: boolean;
   isAuthenticated: boolean;
+  isSiteDataEmpty: boolean;
 };
 
 const initialState: initialStateType = {
   selectedSite: null,
   addSiteModalOpen: false,
   isAuthenticated: localStorage.getItem("accessToken") !== null,
+  isSiteDataEmpty: false,
 };
 
 const appSlice = createSlice({
@@ -24,6 +26,9 @@ const appSlice = createSlice({
     },
     setIsAuthenticated(state, action: PayloadAction<boolean>) {
       state.isAuthenticated = action.payload;
+    },
+    setIsSiteDataEmpty(state, action: PayloadAction<boolean>) {
+      state.isSiteDataEmpty = action.payload;
     },
   },
 });

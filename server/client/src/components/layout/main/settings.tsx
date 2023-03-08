@@ -1,4 +1,7 @@
 import React from "react";
+import { CopyToClipboard } from "react-copy-to-clipboard";
+
+import Copy from "../../../assets/icons/copy.svg";
 import { ISite } from "../../../types";
 
 const SettingsContainer = ({
@@ -31,6 +34,11 @@ const SettingsContainer = ({
               <div className="info-container">
                 <p>{selectedSite._id}</p>
               </div>
+              <CopyToClipboard text={selectedSite._id}>
+                <button type="button" className="icon-container">
+                  <img src={Copy} alt="copy-icon" />
+                </button>
+              </CopyToClipboard>
             </div>
           </>
         )}

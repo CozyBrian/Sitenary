@@ -18,6 +18,7 @@ const MainView = () => {
   const app = useAppSelector((state) => state.app);
   const dispatch = useAppDispatch();
   const queryClient = useQueryClient();
+  const [initState, setInitState] = useState(false);
   const [activePeriod, setActivePeriod] = useState("short");
   const [viewDataSet, setViewDataSet] = useState<IViewsDataSet[]>([]);
   const [originsDataSet, setOriginsDataSet] = useState<ICount>({});
@@ -42,6 +43,12 @@ const MainView = () => {
     {
       enabled: app.selectedSite !== null,
       onSuccess: (data: IEventsResponse) => {
+        if (Object.entries(data.origins).length === 0) {
+          if (!initState) {
+            dispatch(action.app.setIsSiteDataEmpty(true));
+          }
+          setInitState(true);
+        }
         setOriginsDataSet(data.origins);
         setPlatformsDataSet(data.platforms);
         if (activePeriod === "long") {
