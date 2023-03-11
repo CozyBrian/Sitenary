@@ -5,6 +5,7 @@ type initialStateType = {
   addSiteModalOpen: boolean;
   isAuthenticated: boolean;
   isSiteDataEmpty: boolean;
+  isDrawerOpen: boolean;
 };
 
 const initialState: initialStateType = {
@@ -12,6 +13,7 @@ const initialState: initialStateType = {
   addSiteModalOpen: false,
   isAuthenticated: localStorage.getItem("accessToken") !== null,
   isSiteDataEmpty: false,
+  isDrawerOpen: false,
 };
 
 const appSlice = createSlice({
@@ -29,6 +31,9 @@ const appSlice = createSlice({
     },
     setIsSiteDataEmpty(state, action: PayloadAction<boolean>) {
       state.isSiteDataEmpty = action.payload;
+    },
+    setIsDrawerOpen(state, action: PayloadAction<boolean>) {
+      state.isDrawerOpen = action.payload;
     },
   },
 });

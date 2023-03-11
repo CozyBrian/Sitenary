@@ -5,7 +5,6 @@ import logout from "../../../assets/icons/logout.png";
 import { ISite } from "../../../types";
 import { useAppDispatch } from "../../../hooks";
 import { action } from "../../../redux";
-import "./style.scss";
 
 const Header = ({
   selectedSite,
@@ -21,11 +20,15 @@ const Header = ({
     dispatch(action.app.setIsAuthenticated(true));
     window.location.reload();
   };
+
+  const handleOpenDrawer = () => {
+    dispatch(action.app.setIsDrawerOpen(true));
+  };
   return (
     <header
       className={cn("main-content-header", { scroll: elementScroll > 50 })}
     >
-      <div>
+      <div onClick={handleOpenDrawer}>
         {selectedSite !== undefined ? (
           <h1>{selectedSite.name}</h1>
         ) : (

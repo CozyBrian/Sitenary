@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import cn from "classnames";
 import { Oval } from "react-loader-spinner";
 import Close from "../../../assets/icons/close.svg";
 import { useQuery } from "react-query";
@@ -26,6 +27,10 @@ const Sidebar = () => {
     refetchOnWindowFocus: false,
   });
 
+  const handleCloseDrawer = () => {
+    dispatch(action.app.setIsDrawerOpen(false));
+  };
+
   const resizeRef = React.useRef<HTMLDivElement>(null);
   const [isResizing, setIsResizing] = useState(false);
 
@@ -51,10 +56,10 @@ const Sidebar = () => {
   useEventListener("mouseup", handleMouseUp);
 
   return (
-    <div className="sidebar-wrapper">
+    <div className={cn("sidebar-wrapper", { open: app.isDrawerOpen })}>
       <nav className="main-sidebar">
         <div className="main-sidebar-header">
-          <h1>Sitenary</h1>
+          <h1 onClick={handleCloseDrawer}>Sitenary</h1>
           <div
             className="main-sidebar-icon"
             onClick={() => dispatch(action.app.setAddSiteModalOpen(true))}

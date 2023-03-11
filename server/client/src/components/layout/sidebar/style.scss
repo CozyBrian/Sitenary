@@ -31,6 +31,26 @@
   background-color: #f5f5f5;
 }
 
+@media screen and (max-width: 768px) {
+  .sidebar-wrapper {
+    position: fixed;
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+    background-color: #f5f5f5;
+    left: calc(var(--SidebarWidth) * -1);
+    top: 0;
+    z-index: 1;
+    transition: left 0.3s ease-in-out;
+
+    &.open {
+      left: 0;
+    }
+  }
+
+
+}
+
 .main-sidebar {
   display: flex;
   flex-direction: column;

@@ -13,6 +13,8 @@
   position: relative;
 
   
+
+  
   .main-content-header {
     display: flex;
     flex-direction: row;
@@ -28,6 +30,11 @@
     padding-left: 28px;
     transition: all 0.3s ease;
     height: 48px;
+
+    @media screen and (max-width: 768px) { 
+      left: 0;
+      padding-left: 14px;
+    }
 
     .header-actions-section {
       position: relative;
@@ -45,6 +52,10 @@
         transition: all 0.3s ease;
         padding: 4px;
         border-radius: 100%;
+
+        @media screen and (max-width: 768px) { 
+          right: 32px;
+        }
 
         &:hover {
           background-color: #c4c4c4;
@@ -68,6 +79,10 @@
         img {
           width: 16px;
           height: 16px;
+        }
+
+        @media screen and (max-width: 768px) { 
+          right: 32px;
         }
 
         .header-action-menu-item {
