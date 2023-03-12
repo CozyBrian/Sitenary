@@ -5,7 +5,6 @@ class Sitenary {
 
   constructor (site: string) {
     this.siteId = site;
-    console.info("Sitenary is running...");
     if (site !== undefined && site !== null) {
       (async () => {
         this.siteId = site;
@@ -13,7 +12,6 @@ class Sitenary {
           axios.post(`https://sitenary-web-huuh3.ondigitalocean.app/v1/events/${this.siteId}`, {
             event: {
               type: "VIEW",
-              origin: window.location.href, 
             }
           })
           .catch((error) => {
@@ -24,7 +22,6 @@ class Sitenary {
         return axios.post(`https://sitenary-web-huuh3.ondigitalocean.app/v1/events/${this.siteId}`, {
           event: {
             type: "VIEW",
-            origin: window.location.href,
           }
         })
         .catch((error) => {
