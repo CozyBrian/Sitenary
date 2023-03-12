@@ -47,7 +47,7 @@ export const postEvent = async (req: Request, res: Response) => {
     const UserAgent = req.headers["user-agent"];
     const ua = UAParser(UserAgent);
     const now = new Date();
-    await sendEvent({ip: clientIp!, platform: ua.os.name, ...event, createdAt: now}, id)
+    await sendEvent({ip: clientIp!, platform: ua.os.name, origin: req.headers.origin, type: "VIEW", createdAt: now}, id)
     res.status(200).send("Success");
   } else {
     res.status(400).send({ error: "Site not found" });
