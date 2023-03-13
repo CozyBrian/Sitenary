@@ -1,4 +1,4 @@
-const ProcessUrl = (url: string | undefined) => {
+export const ProcessUrl = (url: string | undefined) => {
   if (url !== undefined) {
     const origin = url.split("//");
     const originWOHttps = origin[1];

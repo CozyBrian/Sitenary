@@ -6,6 +6,7 @@ import { EVENT, IEventsResponse, PeriodType } from "../../types";
 import { saveCache } from "../../utils/nodeCache";
 import UAParser from "ua-parser-js";
 import { countProperty, reduceData } from "../../utils/reduce";
+import { ProcessUrl } from "../../utils/processUrl";
 
 export const getEvents = async (req: Request, res: Response) => {
   const siteId = req.params.id;
@@ -41,16 +42,20 @@ export const getEvents = async (req: Request, res: Response) => {
 export const postEvent = async (req: Request, res: Response) => {
   const { id } = req.params;
 
-  if (await isSiteExists(id)) {
-    let clientIp = requestIp.getClientIp(req);
-    const UserAgent = req.headers["user-agent"];
-    const ua = UAParser(UserAgent);
-    const now = new Date();
-    const origin = ProcessUrl(req.headers.origin);
-    await sendEvent({ip: clientIp!, platform: ua.os.name, origin, type: "VIEW", createdAt: now}, id)
-    res.status(200).send("Success");
-  } else {
-    res.status(400).send({ error: "Site not found" });
+  try {
+    if (await isSiteExists(id)) {
+      let clientIp = requestIp.getClientIp(req);
+      const UserAgent = req.headers["user-agent"];
+      const ua = UAParser(UserAgent);
+      const now = new Date();
+      const origin = ProcessUrl(req.headers.origin);
+      await sendEvent({ip: clientIp!, platform: ua.os.name, origin, type: "VIEW", createdAt: now}, id)
+      res.status(200).send("Success");
+    } else {
+      res.status(400).send({ error: "Site not found" });
+    }
+  } catch (error) {
+    res.status(500).send({ error: "Internal server error" });
   }
 
 };
