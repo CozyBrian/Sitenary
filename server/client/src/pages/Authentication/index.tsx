@@ -47,7 +47,6 @@ const Auth = () => {
         }
       )
       .then((res) => {
-        console.log(res.data);
         localStorage.setItem("accessToken", res.data.accessToken);
         dispatch(action.app.setIsAuthenticated(true));
         window.location.reload();

@@ -1,6 +1,5 @@
 import cn from "classnames";
 import { useRef, useState } from "react";
-import { Oval } from "react-loader-spinner";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { useAppDispatch, useAppSelector } from "../../../hooks";
 import useElementScroll from "../../../hooks/useElementScroll";
@@ -11,6 +10,7 @@ import { months } from "../../../utils/utils";
 import BarChart from "../../Charts/bar-chart";
 import DoughnutChart from "../../Charts/doughnut-chart";
 import Header from "../header/header";
+import Complication from "./complication";
 import SettingsContainer from "./settings";
 import "./style.scss";
 
@@ -100,145 +100,105 @@ const MainView = () => {
           <div className="complication-box">
             <div className="complication-parent">
               <div className="main-content-left">
-                <div className="complication-container">
-                  <h2>Views</h2>
-                  {isLoading && (
-                    <div className="loading-container">
-                      <Oval
-                        color="#737373"
-                        secondaryColor="#D7D7D7"
-                        width={42}
-                        strokeWidth={4}
-                      />
-                    </div>
-                  )}
-                  {isError && (
-                    <div className="loading-container">
-                      <p>There was an error the data</p>
-                    </div>
-                  )}
-                  {data !== undefined && (
-                    <BarChart
-                      chartData={{
-                        labels: viewDataSet.map((data) => {
-                          switch (activePeriod) {
-                            case "long":
-                              const date = data.date ? data.date : "2";
-                              const month = months[parseInt(date) - 1];
-                              return month ? month.slice(0, 3) : "Jan";
+                <Complication
+                  title="Views"
+                  count={viewDataSet.reduce((acc, data) => acc + data.count, 0)}
+                  isLoading={isLoading}
+                  isError={isError}
+                  isData={data !== undefined}
+                >
+                  <BarChart
+                    chartData={{
+                      labels: viewDataSet.map((data) => {
+                        switch (activePeriod) {
+                          case "long":
+                            const date = data.date ? data.date : "2";
+                            const month = months[parseInt(date) - 1];
+                            return month ? month.slice(0, 3) : "Jan";
 
-                            default:
-                              return data.date.split("-")[2];
-                          }
-                        }),
-                        datasets: [
-                          {
-                            label: "Views",
-                            data: viewDataSet.map((data) => data.count),
-                            backgroundColor: "#0284C7",
-                          },
-                        ],
-                      }}
-                    />
-                  )}
-                </div>
+                          default:
+                            return data.date.split("-")[2];
+                        }
+                      }),
+                      datasets: [
+                        {
+                          label: "Views",
+                          data: viewDataSet.map((data) => data.count),
+                          backgroundColor: "#0284C7",
+                        },
+                      ],
+                    }}
+                  />
+                </Complication>
               </div>
               <div className="main-content-right">
-                <div className="complication-container">
-                  <h2>Unique Visitors</h2>
-                  {isLoading && (
-                    <div className="loading-container">
-                      <Oval
-                        color="#737373"
-                        secondaryColor="#D7D7D7"
-                        width={42}
-                        strokeWidth={4}
-                      />
-                    </div>
+                <Complication
+                  title="Unique Visitors"
+                  count={viewDataSet.reduce(
+                    (acc, data) => acc + data.uniqueIPs,
+                    0
                   )}
-                  {data !== undefined && (
-                    <BarChart
-                      chartData={{
-                        labels: viewDataSet.map((data) => {
-                          switch (activePeriod) {
-                            case "long":
-                              const date = data.date ? data.date : "2";
-                              const month = months[parseInt(date) - 1];
-                              return month ? month.slice(0, 3) : "Jan";
+                  isLoading={isLoading}
+                  isError={isError}
+                  isData={data !== undefined}
+                >
+                  <BarChart
+                    chartData={{
+                      labels: viewDataSet.map((data) => {
+                        switch (activePeriod) {
+                          case "long":
+                            const date = data.date ? data.date : "2";
+                            const month = months[parseInt(date) - 1];
+                            return month ? month.slice(0, 3) : "Jan";
 
-                            default:
-                              return data.date.split("-")[2];
-                          }
-                        }),
-                        datasets: [
-                          {
-                            label: "Unique Visitors",
-                            data: viewDataSet.map((data) => data.uniqueIPs),
-                            backgroundColor: "#0369A1",
-                          },
-                        ],
-                      }}
-                    />
-                  )}
-                </div>
+                          default:
+                            return data.date.split("-")[2];
+                        }
+                      }),
+                      datasets: [
+                        {
+                          label: "Unique Visitors",
+                          data: viewDataSet.map((data) => data.uniqueIPs),
+                          backgroundColor: "#0369A1",
+                        },
+                      ],
+                    }}
+                  />
+                </Complication>
               </div>
             </div>
             <div className="complication-parent">
-              <div className="complication-container">
-                <h2>Pages</h2>
-                {isLoading && (
-                  <div className="loading-container">
-                    <Oval
-                      color="#737373"
-                      secondaryColor="#D7D7D7"
-                      width={42}
-                      strokeWidth={4}
-                    />
-                  </div>
-                )}
-                {isError && (
-                  <div className="loading-container">
-                    <p>There was an error the data</p>
-                  </div>
-                )}
-                <div className=" pie-chart">
-                  {data !== undefined && (
-                    <DoughnutChart
-                      chartData={{
-                        labels: Object.entries(originsDataSet).map((data) => {
-                          const route = data[0].split("/");
-                          return "/" + route[route.length - 1];
-                        }),
-                        datasets: [
-                          {
-                            label: "Pages",
-                            data: Object.entries(originsDataSet).map(
-                              (data) => data[1]
-                            ),
-                          },
-                        ],
-                      }}
-                    />
-                  )}
+              <Complication
+                title="Pages"
+                isError={isError}
+                isLoading={isLoading}
+                isData={data !== undefined}
+              >
+                <div className="pie-chart">
+                  <DoughnutChart
+                    chartData={{
+                      labels: Object.entries(originsDataSet).map((data) => {
+                        const route = data[0].split("/");
+                        return "/" + route[route.length - 1];
+                      }),
+                      datasets: [
+                        {
+                          label: "Pages",
+                          data: Object.entries(originsDataSet).map(
+                            (data) => data[1]
+                          ),
+                        },
+                      ],
+                    }}
+                  />
                 </div>
-              </div>
-              <div className="complication-container">
-                <h2>OSs</h2>
-                {isLoading && (
-                  <div className="loading-container">
-                    <Oval
-                      color="#737373"
-                      secondaryColor="#D7D7D7"
-                      width={42}
-                      strokeWidth={4}
-                    />
-                  </div>
-                )}
-                {isError && (
-                  <div className="loading-container">
-                    <p>There was an error the data</p>
-                  </div>
-                )}
+              </Complication>
+              <Complication
+                title="OSs"
+                isError={isError}
+                isLoading={isLoading}
+                isData={data !== undefined}
+              >
                 <div className=" pie-chart">
                   {data !== undefined && (
                     <DoughnutChart
@@ -258,7 +218,7 @@ const MainView = () => {
                     />
                   )}
                 </div>
-              </div>
+              </Complication>
             </div>
           </div>
           <SettingsContainer

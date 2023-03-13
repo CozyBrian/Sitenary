@@ -209,22 +209,21 @@
         border: 1px solid #e5e5e5;
         padding: 24px;
 
-        h2 {
-          font-size: 24px;
-          font-weight: 600;
-          margin: 0;
-          margin-bottom: 24px;
-        }
-
+        
         .complication-header {
           display: flex;
           flex-direction: row;
           align-items: center;
           justify-content: space-between;
           font-size: 0.8rem;
-          background-color: #e5e5e5;
-          padding: 12px;
+          padding-bottom: 16px;
 
+          h2 {
+            font-size: 24px;
+            font-weight: 600;
+            margin: 0;
+          }
+          
           p {
             margin: 0;
           }
