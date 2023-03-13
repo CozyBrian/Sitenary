@@ -40,14 +40,14 @@ export const getEvents = async (req: Request, res: Response) => {
 
 export const postEvent = async (req: Request, res: Response) => {
   const { id } = req.params;
-  const event = req.body.event as EVENT;
 
   if (await isSiteExists(id)) {
     let clientIp = requestIp.getClientIp(req);
     const UserAgent = req.headers["user-agent"];
     const ua = UAParser(UserAgent);
     const now = new Date();
-    await sendEvent({ip: clientIp!, platform: ua.os.name, origin: req.headers.origin, type: "VIEW", createdAt: now}, id)
+    const origin = ProcessUrl(req.headers.origin);
+    await sendEvent({ip: clientIp!, platform: ua.os.name, origin, type: "VIEW", createdAt: now}, id)
     res.status(200).send("Success");
   } else {
     res.status(400).send({ error: "Site not found" });
