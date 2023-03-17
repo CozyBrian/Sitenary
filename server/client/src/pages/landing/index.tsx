@@ -1,10 +1,12 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import { Feature } from "./feature/feature";
 import LandingSVG from "./landingsvg";
 import { Pricing } from "./pricing/pricing";
 import "./style.scss";
 
 const HomePage = () => {
+  const navigate = useNavigate();
   return (
     <div className="landing-page">
       <div className="container">
@@ -24,8 +26,12 @@ const HomePage = () => {
             </ul>
           </nav>
           <div className="action-section">
-            <button className="primary">Sign Up</button>
-            <button className="secondary">Login</button>
+            <button onClick={() => navigate("/auth")} className="primary">
+              Sign Up
+            </button>
+            <button onClick={() => navigate("/auth")} className="secondary">
+              Login
+            </button>
           </div>
         </header>
 
@@ -52,8 +58,12 @@ const HomePage = () => {
             </div>
           </div>
           <div className="cta-buttons">
-            <button className="primary">Getting Started</button>
-            <button className="secondary">Learn More</button>
+            <button onClick={() => navigate("/app")} className="primary">
+              Getting Started
+            </button>
+            <button onClick={() => navigate("/app")} className="secondary">
+              Learn More
+            </button>
           </div>
         </section>
       </div>

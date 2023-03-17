@@ -1,3 +1,10 @@
+html {
+  font-size: 12px;
+  @media (min-width: 1080px) {
+    font-size: 16px;
+  }
+}
+
 .landing-page {
   h1, h2, h3, h4, h5, h6, p, ol, ul {
     margin: 0;
@@ -13,13 +20,24 @@
 
   .container {
 
-
     header {
       display: flex;
       justify-content: space-between;
       align-items: center;
       padding: 1.25rem 0;
-      margin: 0 10rem;
+      margin: 0 2rem;
+
+      // sm
+      @media (min-width: 640px) {
+        margin: 0 6rem;
+      }
+      // md
+      @media (min-width: 768px) {
+        margin: 0 10rem;
+      }
+
+
+
 
       h1 {
         font-size: 2.5rem;
@@ -35,8 +53,18 @@
         }
       }
 
+      nav {
+        display: none;
+        @media (min-width: 1080px) {
+          display: flex;
+        }
+      }
+
       .action-section {
-        display: flex;
+        display: none;
+        @media (min-width: 1080px) {
+          display: flex;
+        }
         align-items: center;
         gap: 1rem;
         button {
@@ -46,13 +74,13 @@
           font-size: 1rem;
           font-weight: 500;
           color: #fff;
+          border: #000 2px solid;
           cursor: pointer;
 
           &.primary {
             background-color: #000;
           }
           &.secondary {
-            border: #000 2px solid;
             background-color: #ffffff;
             color: #000;
           }
@@ -69,23 +97,41 @@
       justify-content: center;
       flex-direction: column;
       align-items: center;
-      width: 1080px;
+      width: 100%;
+      @media (min-width: 1080px) {
+        width: 1080px;
+        
+      }
       height: 600px;
       
       margin: 64px auto;
-
+      
       .hero-content {
         width: 100%;
         display: flex;
+        flex-direction: column;
+        align-items: center;
+        @media (min-width: 1080px) {
+          
+          flex-direction: row;
+        }
 
         .hero-content-text {
-          width: 65%;
+          width: 90%;
+          @media (min-width: 1080px) {
+            width: 65%;
+            
+          }
           padding: 2rem;
           h2 {
             font-size: 4rem;
             font-weight: 700;
             margin-bottom: 1rem;
-            line-height: 3.8rem
+            line-height: 3.8rem;
+            text-align: center;
+            @media (min-width: 1080px) {
+              text-align: left;
+            }
           }
 
           p {
