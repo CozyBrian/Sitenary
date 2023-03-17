@@ -39,7 +39,7 @@ const HomePage = () => {
         <section className="hero">
           <div className="hero-content">
             <div className="hero-content-text">
-              <h2>Experience Better analytics with Siternary</h2>
+              <h2>Experience Better analytics with Sitenary</h2>
               <p>
                 For the longest time, website analytics software was seriously
                 bad. It was hard to understand, time-consuming to use, and
