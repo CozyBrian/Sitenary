@@ -1,0 +1,144 @@
+.landing-page {
+  h1, h2, h3, h4, h5, h6, p, ol, ul {
+    margin: 0;
+    padding: 0;
+  }
+  ol, ul {
+    list-style: none;
+  }
+  a {
+    text-decoration: none;
+    color: inherit;
+  } 
+
+  .container {
+
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.25rem 0;
+      margin: 0 10rem;
+
+      h1 {
+        font-size: 2.5rem;
+        font-weight: 700;
+      }
+
+      ul {
+        display: flex;
+        align-items: center;
+        li {
+          margin-left: 20px;
+          font-size: 1.25rem;
+        }
+      }
+
+      .action-section {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        button {
+          padding: 0.5rem 1rem;
+          border: none;
+          border-radius: 2rem;
+          font-size: 1rem;
+          font-weight: 500;
+          color: #fff;
+          cursor: pointer;
+
+          &.primary {
+            background-color: #000;
+          }
+          &.secondary {
+            border: #000 2px solid;
+            background-color: #ffffff;
+            color: #000;
+          }
+        }
+      }
+
+    }
+    //all css breakpoints
+
+
+
+    section.hero {
+      display: flex;
+      justify-content: center;
+      flex-direction: column;
+      align-items: center;
+      width: 1080px;
+      height: 600px;
+      
+      margin: 64px auto;
+
+      .hero-content {
+        width: 100%;
+        display: flex;
+
+        .hero-content-text {
+          width: 65%;
+          padding: 2rem;
+          h2 {
+            font-size: 4rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            line-height: 3.8rem
+          }
+
+          p {
+            font-size: 1.25rem;
+          }
+        }
+
+        .hero-content-image {
+         
+          width: 40%;
+          height: 100%;
+          svg {
+            width: 100%;
+            height: 100%;
+          }
+        }
+      }
+
+      .cta-buttons {
+        display: flex;
+        gap: 1rem;
+        margin-top: 4rem;
+
+        button {
+          padding: 1.5rem 2rem;
+          border: none;
+          border-radius: 0.5rem;
+          font-size: 1.25rem;
+          font-weight: 500;
+          color: #fff;
+          cursor: pointer;
+
+          &.primary {
+            background-color: #000;
+          }
+          &.secondary {
+            border: #000 2px solid;
+            background-color: #ffffff;
+            color: #000;
+          }
+        }
+      }
+      
+
+      
+
+      .hero-image {
+        img {
+          width: 100%;
+        }
+      }
+    }
+  }
+
+
+}
